@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static io.youngwon.app.utils.ApiUtils.ApiResult;
@@ -37,7 +38,7 @@ public class ProductsApiController {
     }
 
     @PostMapping
-    public ApiResult<ProductsDto> save(@RequestBody ProductsSaveRequestDto requestDto) {
+    public ApiResult<ProductsDto> save(@Valid @RequestBody ProductsSaveRequestDto requestDto) {
         return null;
     }
 

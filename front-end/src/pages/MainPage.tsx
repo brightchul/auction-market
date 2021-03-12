@@ -1,8 +1,16 @@
-import React from 'react';
+import React from "react";
+import BaseTemplate from "../components/template/BaseTemplate";
 
-const MainPage : React.FC = () => {
-  return <div></div>;
-}
 
+
+import MainContainer from '../containers/main/MainContainer';
+
+const MainPage: React.FC = () => {
+  return (
+    <BaseTemplate>
+      <MainContainer />
+    </BaseTemplate>
+  );
+};
 
 export default MainPage;

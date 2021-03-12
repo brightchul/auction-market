@@ -37,11 +37,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // 서비스 구분
         String registrationId = oAuth2UserRequest.getClientRegistration().getRegistrationId();
-        System.out.println(registrationId);
+
         // 로그인 소비스에서 제공하는 키값
         String userNameAttributeName = oAuth2UserRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
-        System.out.println(userNameAttributeName);
+
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         Users user = saveOrUpdate(attributes);

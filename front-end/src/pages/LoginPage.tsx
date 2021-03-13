@@ -1,13 +1,14 @@
 import React from "react";
+import AuthTemplate from "../components/template/AuthTemplate";
+import LoginContainer from "../containers/auth/LoginContainer";
 
 const LoginPage: React.FC = () => {
 
 
   return (
-    <div>
-      <a href="/oauth2/authorization/naver">네이버 로그인</a>
-      <a href="/oauth2/authorization/kakao">카카오 로그인</a>
-    </div>
+    <AuthTemplate>
+      <LoginContainer/>
+    </AuthTemplate>
   );
 };
 

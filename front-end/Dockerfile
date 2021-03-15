@@ -1,7 +1,7 @@
 FROM node:alpine
 WORKDIR '/app'
 COPY ./package.json ./
-RUN npm update
-RUN npm install
+RUN npm update --force
+RUN npm install 
 COPY . .
 CMD ["npm", "run", "start"]

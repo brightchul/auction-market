@@ -43,6 +43,11 @@ public class ProductsApiController {
         return success(productsService.findById(id));
     }
 
+    /**
+     * 상품 등록
+     * @param requestDto
+     * @return
+     */
     @PostMapping
     public ApiResult<ProductsDto> save(@Valid @RequestBody ProductsSaveRequestDto requestDto) {
         Long id = productsService.save(1L, requestDto);

@@ -2,6 +2,7 @@ package io.youngwon.app.service;
 
 
 import io.youngwon.app.config.errors.NotFoundException;
+import io.youngwon.app.domain.files.Files;
 import io.youngwon.app.domain.products.Products;
 import io.youngwon.app.domain.products.ProductsRepository;
 import io.youngwon.app.web.dto.products.ProductsDto;
@@ -40,6 +41,13 @@ public class ProductsService {
 
     @Transactional
     public Long save(Long userId, ProductsSaveRequestDto requestDto) {
+
+
+        requestDto.saveImages();
+
+
+
+
         return productsRepository
                 .save(requestDto.toEntity())
                 .getId();

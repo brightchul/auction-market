@@ -80,7 +80,7 @@ public class ProductsApiControllerTest {
                 .startPrice(startPrice)
                 .categories(categories)
                 .build();
-
+//
         ResultActions result = mockMvc.perform(
                 post("/api/products")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -89,9 +89,7 @@ public class ProductsApiControllerTest {
                         .andExpect(status().isOk());
         //then
         result.andDo(print())
-//                .andExpect(status().is4xxClientError())
                 .andExpect(handler().handlerType(ProductsApiController.class))
-//                .andExpect(handler().methodName("review"))
                 .andExpect(jsonPath("$.success", is(true)));
 
 

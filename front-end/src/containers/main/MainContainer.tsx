@@ -13,8 +13,6 @@ import { loadCategories, loadProducts } from "../../modules/main";
 const MainContainer: React.FC = () => {
 
   const dispatch = useDispatch();
-
-
   const {
     categories,
     products,
@@ -37,9 +35,13 @@ const MainContainer: React.FC = () => {
 
   return (
     <Grid>
-      <Grid.Row columns="2">
-        <Grid.Column><CategoriesList categories={categories}/></Grid.Column>
-        <Grid.Column><ProductsList products={products}/></Grid.Column>
+      <Grid.Row>
+        <Grid.Column width={4}>
+          <CategoriesList categories={categories} />
+        </Grid.Column>
+        <Grid.Column width={12}>
+          <ProductsList products={products} />
+        </Grid.Column>
       </Grid.Row>
     </Grid>
   );

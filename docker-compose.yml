@@ -19,3 +19,5 @@ services:
     build:
       dockerfile: Dockerfile
       context: './back-end'
+    volumes:
+      - ./uploads:/uploads

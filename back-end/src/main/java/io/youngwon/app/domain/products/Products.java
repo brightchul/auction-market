@@ -3,6 +3,7 @@ package io.youngwon.app.domain.products;
 
 import io.youngwon.app.domain.BaseTimeEntity;
 import io.youngwon.app.domain.categories.Categories;
+import io.youngwon.app.domain.files.Files;
 import io.youngwon.app.domain.users.Users;
 import io.youngwon.app.web.dto.products.ProductsDto;
 import io.youngwon.app.web.dto.products.ProductsSaveRequestDto;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -40,6 +42,8 @@ public class Products extends BaseTimeEntity {
 
     private LocalDateTime endDateTime;
 
+    @OneToMany(mappedBy = "products")
+    private List<Files> files;
 
     public Products(ProductsSaveRequestDto requestDto){
         this.title = requestDto.getTitle();

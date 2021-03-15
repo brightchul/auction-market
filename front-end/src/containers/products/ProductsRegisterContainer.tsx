@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { FormEvent, useEffect } from "react";
+import { ImageListType } from "react-images-uploading";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "semantic-ui-react";
 import ProductsForm from "../../components/products/ProductsForm";
 import { RootState } from "../../modules";
 import { loadCategories } from "../../modules/main";
+import {
+  changeField,
+  setImages,
+  registerProduct,
+} from "../../modules/register";
 
 
 const ProductsRegisterContainer: React.FC = () => {
@@ -11,13 +17,13 @@ const ProductsRegisterContainer: React.FC = () => {
   const dispatch = useDispatch();
   const {
     categories,
-    
+    form,
     error,
   } = useSelector(
     (state: RootState) => ({
       categories: state.main.categories,
-      
-      error: state.main.error,
+      form: state.register.form,
+      error: state.register.error,
     })
   );
 
@@ -30,12 +36,23 @@ const ProductsRegisterContainer: React.FC = () => {
 
 
 
-  const handleChange = () => {
-
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    dispatch(changeField({ key: name, value }));
   }
-  
-  const handleSubmit = () => {
+  const handleSetImages = (
+    imageList: ImageListType,
+    addUpdateIndex: number[] | undefined
+  ) => {
+    dispatch(setImages(imageList));
+  };
 
+
+  const handleSubmit = (e: React.FormEvent<FormEvent>) => {
+    e.preventDefault();
+    const { categories, title, content, images, startPrice, startDateTime, endDateTime } = form;
+    
+    dispatch(registerProduct.request({ ...form }));
   }
 
 
@@ -45,7 +62,13 @@ const ProductsRegisterContainer: React.FC = () => {
     <Grid>
       <Grid.Row columns="1">
         <Grid.Column>
-          <ProductsForm categories={categories} />
+          <ProductsForm
+            handleChange={handleChange}
+            handleSetImages={handleSetImages}
+            handleSubmit={handleSubmit}
+            form={form}
+            categories={categories}
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>

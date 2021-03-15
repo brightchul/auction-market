@@ -20,7 +20,7 @@ export default function createAsyncSaga(type: any, request: any) {
     try {
       const response = yield call(request, action.payload);
 
-      
+      console.log(response);
 
       yield put({
         type: SUCCESS,

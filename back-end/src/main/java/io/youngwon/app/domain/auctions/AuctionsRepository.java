@@ -1,4 +1,6 @@
 package io.youngwon.app.domain.auctions;
 
-public class AuctionsRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AuctionsRepository extends JpaRepository<Auctions, Long> {
 }

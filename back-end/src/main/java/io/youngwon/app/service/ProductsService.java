@@ -2,11 +2,10 @@ package io.youngwon.app.service;
 
 
 import io.youngwon.app.config.errors.NotFoundException;
-import io.youngwon.app.domain.files.Files;
 import io.youngwon.app.domain.products.Products;
 import io.youngwon.app.domain.products.ProductsRepository;
-import io.youngwon.app.web.dto.products.ProductsDto;
-import io.youngwon.app.web.dto.products.ProductsListDto;
+import io.youngwon.app.web.dto.products.ProductsResponseDto;
+import io.youngwon.app.web.dto.products.ProductsListResponseDto;
 import io.youngwon.app.web.dto.products.ProductsSaveRequestDto;
 import io.youngwon.app.web.dto.products.ProductsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -23,19 +22,19 @@ public class ProductsService {
     private final ProductsRepository productsRepository;
 
     @Transactional(readOnly = true)
-    public ProductsDto findById(Long id) {
+    public ProductsResponseDto findById(Long id) {
         return productsRepository
                 .findById(id)
-                .map(ProductsDto::new)
+                .map(ProductsResponseDto::new)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
     }
 
     @Transactional(readOnly = true)
-    public List<ProductsListDto> findAll() {
+    public List<ProductsListResponseDto> findAll() {
         return productsRepository
                 .findAll()
                 .stream()
-                .map(ProductsListDto::new)
+                .map(ProductsListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +42,7 @@ public class ProductsService {
     public Long save(Long userId, ProductsSaveRequestDto requestDto) {
 
 
-        requestDto.saveImages();
+//        requestDto.saveImages();
 
 
 

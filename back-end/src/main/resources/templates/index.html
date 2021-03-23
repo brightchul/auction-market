@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+11
+
+
+<script>
+    var sock = new SockJS('http://localhost:8080/ws');
+    stompClient = Stomp.over(sock);
+    stompClient.connect({}, function () {
+        stompClient.subscribe("/topic/auctions", function (msg) {
+            console.log(msg)
+        });
+
+        stompClient.send("/app/auctions", {}, JSON.stringify({
+            productsId: 1,
+            price : 5000
+        }));
+    })
+
+
+
+</script>
+</body>
+</html>

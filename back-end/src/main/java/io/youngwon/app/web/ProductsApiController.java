@@ -1,11 +1,9 @@
 package io.youngwon.app.web;
 
 
-import io.youngwon.app.config.auth.LoginUser;
-import io.youngwon.app.config.auth.dto.SessionUser;
 import io.youngwon.app.service.ProductsService;
-import io.youngwon.app.web.dto.products.ProductsDto;
-import io.youngwon.app.web.dto.products.ProductsListDto;
+import io.youngwon.app.web.dto.products.ProductsResponseDto;
+import io.youngwon.app.web.dto.products.ProductsListResponseDto;
 import io.youngwon.app.web.dto.products.ProductsSaveRequestDto;
 import io.youngwon.app.web.dto.products.ProductsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -27,19 +25,19 @@ public class ProductsApiController {
     private final ProductsService productsService;
 
     @GetMapping
-    public ApiResult<List<ProductsListDto>> findAll() {
+    public ApiResult<List<ProductsListResponseDto>> findAll() {
         return success(productsService.findAll());
     }
 
     // 페이징 지원 필요
     @GetMapping("categories/{id}")
-    public ApiResult<ProductsDto> findByCategories(@PathVariable Long id) {
+    public ApiResult<ProductsResponseDto> findByCategories(@PathVariable Long id) {
         return success(productsService.findById(id));
     }
 
 
     @GetMapping("{id}")
-    public ApiResult<ProductsDto> findById(@PathVariable Long id) {
+    public ApiResult<ProductsResponseDto> findById(@PathVariable Long id) {
         return success(productsService.findById(id));
     }
 
@@ -49,13 +47,13 @@ public class ProductsApiController {
      * @return
      */
     @PostMapping
-    public ApiResult<ProductsDto> save(@Valid @RequestBody ProductsSaveRequestDto requestDto) {
+    public ApiResult<ProductsResponseDto> save(@Valid @RequestBody ProductsSaveRequestDto requestDto) {
         Long id = productsService.save(1L, requestDto);
         return success(productsService.findById(id));
     }
 
     @PutMapping("{id}")
-    public ApiResult<ProductsDto> update(@PathVariable Long id, @RequestBody ProductsUpdateRequestDto requestDto) {
+    public ApiResult<ProductsResponseDto> update(@PathVariable Long id, @RequestBody ProductsUpdateRequestDto requestDto) {
         productsService.update(id, requestDto);
         return success(productsService.findById(id));
     }

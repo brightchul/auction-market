@@ -15,6 +15,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -30,41 +31,24 @@ public class ProductsSaveRequestDto {
 
     private Long startPrice;
 
+    private String startDate;
+
+    private String endDateTime;
+
+
     @NotNull(message = "categories must be provided")
     private Long categories;
 
-    @Builder
-    public ProductsSaveRequestDto(String title, String content, Long startPrice, Long categories) {
-        this.title = title;
-        this.content = content;
-        this.startPrice = startPrice;
-        this.categories = categories;
-    }
+//    @Builder
+//    public ProductsSaveRequestDto(String title, String content, Long startPrice, Long categories) {
+//        this.title = title;
+//        this.content = content;
+//        this.startPrice = startPrice;
+//        this.categories = categories;
+//    }
 
     public Products toEntity() {
         return new Products(this);
-    }
-
-    public void saveImages() {
-        if (images != null) {
-
-            Path path = Paths.get("upload");
-            for (Images image : images) {
-
-
-                try {
-                    byte[] bytes = java.util.Base64.getDecoder().decode(image.dataURL.substring(image.dataURL.indexOf(",") + 1));
-
-                    Files.write(Paths.get("uploads", "output.png") , bytes);
-
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-//                Files.copy(new ByteArrayInputStream(bytes), path.resolve("123.png"));
-//                return path.resolve("123.png").toAbsolutePath().toString();
-
-            }
-        }
     }
 
     @ToString
@@ -72,6 +56,5 @@ public class ProductsSaveRequestDto {
     @NoArgsConstructor
     public static class Images {
         private String dataURL;
-
     }
 }

@@ -42,4 +42,8 @@ public class Categories extends BaseTimeEntity {
         this.title = title;
         this.parent = parent;
     }
+
+    public void update(String title){
+        this.title = title;
+    }
 }

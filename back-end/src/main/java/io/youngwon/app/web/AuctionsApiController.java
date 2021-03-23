@@ -1,8 +1,12 @@
 package io.youngwon.app.web;
 
 
+import io.youngwon.app.service.AuctionsService;
+import io.youngwon.app.web.dto.auctions.AuctionsEnterRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static io.youngwon.app.utils.ApiUtils.ApiResult;
 
@@ -12,25 +16,42 @@ import static io.youngwon.app.utils.ApiUtils.ApiResult;
 @RequestMapping("api/products")
 public class AuctionsApiController {
 
-    @GetMapping("{id}/auctions")
-    public ApiResult findAll(){
-        return null;
-    }
+    private final AuctionsService auctionsService;
+//
+//    @GetMapping(path = "{id}/auctions")
+//    public ApiResult findAll() {
+//        return null;
+//    }
+//
+//    @GetMapping("{id}/auctions/{aid}")
+//    public ApiResult findById() {
+//        return null;
+//    }
+//
+//
+//
+//    @PatchMapping("{productId}/auctions")
+//    public ApiResult enter(@PathVariable Long productId,
+//                          @Valid @RequestBody AuctionsEnterRequestDto requestDto) {
+//
+//        auctionsService.enter(productId, requestDto);
+//
+//        // 소켓으로 푸시
+//
+//        return null;
+//    }
+//
+//
+//
+//    @PatchMapping("{productId}/auctions/{id}/cancel")
+//    public ApiResult cancel(@PathVariable Long productId,
+//                            @PathVariable Long id) {
+//
+//        auctionsService.cancel(productId, id);
+//        return null;
+//    }
 
-    @GetMapping("{id}/auctions/{aid}")
-    public ApiResult findById(){
-        return null;
-    }
 
-    @PostMapping("{id}/auctions")
-    public ApiResult bid(){
-        return null;
-    }
-
-    @DeleteMapping("{id}/auctions")
-    public ApiResult delete(){
-        return null;
-    }
 
 
 }

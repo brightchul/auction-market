@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -17,6 +18,10 @@ public class ProductsUpdateRequestDto {
     private String content;
 
     private Long startPrice;
+
+    private String startDate;
+
+    private String endDateTime;
 
 
 }

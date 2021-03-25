@@ -16,7 +16,7 @@
     stompClient = Stomp.over(sock);
     stompClient.connect({}, function () {
         stompClient.subscribe("/topic/auctions", function (msg) {
-            console.log(msg)
+            console.log('received from server ', msg);
         });
 
         stompClient.send("/app/auctions", {}, JSON.stringify({

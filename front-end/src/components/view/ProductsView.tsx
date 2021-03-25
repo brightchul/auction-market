@@ -6,11 +6,31 @@ import Dashboard from "./Dashboard";
 import Description from "./Description";
 import ReactECharts from 'echarts-for-react';
 interface Props {
-  products: any;
+  product: any;
+  form: any;
+  comments: any;
+  handleChangeComment: any;
+  handleToggleCommentMode: any;
+  handleRegisterComment: any;
+  handleUpdateComment: any;
+  handleDeleteComment: any;
+  handleToggleLike: any;
+  handleEnterAuction: any;
+  handleCancelAuction: any;
 }
 
 const ProductsView: React.FC<Props> = ({
-  products,
+  product,
+  form,
+  comments,
+  handleChangeComment,
+  handleToggleCommentMode,
+  handleRegisterComment,
+  handleUpdateComment,
+  handleDeleteComment,
+  handleToggleLike,
+  handleEnterAuction,
+  handleCancelAuction,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const options = {
@@ -50,7 +70,7 @@ const ProductsView: React.FC<Props> = ({
           <Grid.Column>
             <Header
               as="h2"
-              content={products.title}
+              content={product.title}
               subheader="Manage your account settings and set email preferences"
             />
           </Grid.Column>
@@ -112,7 +132,7 @@ const ProductsView: React.FC<Props> = ({
 
         <Grid.Row>
           <Grid.Column width={10}>
-            <Description products={products} />
+            <Description products={product} />
           </Grid.Column>
           <Grid.Column width={6}>
             <Dashboard />
@@ -136,7 +156,15 @@ const ProductsView: React.FC<Props> = ({
         </Grid.Row>
         <Grid.Row columns="1">
           <Grid.Column>
-            <CommentsList />
+            <CommentsList 
+              form={form.comments}
+              comments={comments}
+              handleChange={handleChangeComment}
+              handleToggleCommentMode={handleToggleCommentMode}
+              handleRegisterComment={handleRegisterComment}
+              handleUpdateComment={handleUpdateComment}
+              handleDeleteComment={handleDeleteComment}
+            />
           </Grid.Column>
         </Grid.Row>
       </Grid>

@@ -3,12 +3,14 @@ package io.youngwon.app.web;
 import io.youngwon.app.service.UsersService;
 
 import io.youngwon.app.web.dto.users.UserResponseDto;
+import io.youngwon.app.web.dto.users.UserSaveRequestDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
 import static io.youngwon.app.utils.ApiUtils.ApiResult;
+import static io.youngwon.app.utils.ApiUtils.success;
 
 
 @RequiredArgsConstructor
@@ -26,7 +28,15 @@ public class UsersApiController {
     }
 
 
-    @PostMapping(path = "me")
+
+
+    @PostMapping
+    public ApiResult<Long> update(@RequestBody UserSaveRequestDto requestDto){
+
+        return success(usersService.save(requestDto));
+    }
+
+    @PutMapping(path = "me")
     public ApiResult<UserResponseDto> update(){
 
 

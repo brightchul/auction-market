@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { Header, List } from "semantic-ui-react";
 
 interface Props{
@@ -12,10 +13,12 @@ const CategoriesList: React.FC<Props> = ({ categories }) => {
     const hasChildren = category.children && category.children.length > 0;
 
     return (
-      <List.Item>
+      <List.Item key={category.id}>
         <List.Icon name={hasChildren ? "folder" : "file"} />
         <List.Content>
-          <List.Header>{category.title}</List.Header>
+          <List.Header>
+            <Link to={`/category/${category.id}`}>{category.title}</Link>
+          </List.Header>
           {/* <List.Description>Source files for project</List.Description> */}
           {hasChildren > 0 ? (
             <List.List>

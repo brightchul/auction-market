@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect } from "react";
 import { ImageListType } from "react-images-uploading";
 import { useDispatch, useSelector } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import ProductsForm from "../../components/products/ProductsForm";
 import { RootState } from "../../modules";
@@ -12,7 +13,11 @@ import {
 } from "../../modules/register";
 
 
-const ProductsRegisterContainer: React.FC = () => {
+interface Props extends RouteComponentProps{
+
+}
+
+const ProductsRegisterContainer: React.FC<Props> = ({ history }) => {
 
   const dispatch = useDispatch();
   const {
@@ -40,6 +45,18 @@ const ProductsRegisterContainer: React.FC = () => {
     const { value, name } = e.target;
     dispatch(changeField({ key: name, value }));
   }
+
+  const handleDatePickerChange = ({
+    name,
+    value,
+  }: {
+    name: string;
+    value: string;
+  }) => {
+    dispatch(changeField({ key: name, value }));
+  };
+
+
   const handleSetImages = (
     imageList: ImageListType,
     addUpdateIndex: number[] | undefined
@@ -53,8 +70,18 @@ const ProductsRegisterContainer: React.FC = () => {
     const { categories, title, content, images, startPrice, startDateTime, endDateTime } = form;
     
     dispatch(registerProduct.request({ ...form }));
+
+    // 성공시
+    history.push("/");
   }
 
+  // 성공시
+
+
+
+  const handleCancel = () => {
+    history.push("/");
+  }
 
 
 
@@ -65,7 +92,9 @@ const ProductsRegisterContainer: React.FC = () => {
           <ProductsForm
             handleChange={handleChange}
             handleSetImages={handleSetImages}
+            handleDatePickerChange={handleDatePickerChange}
             handleSubmit={handleSubmit}
+            handleCancel={handleCancel}
             form={form}
             categories={categories}
           />
@@ -75,8 +104,6 @@ const ProductsRegisterContainer: React.FC = () => {
   );
 };
 
-export default ProductsRegisterContainer;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
+export default withRouter(ProductsRegisterContainer);
+
 

@@ -2,6 +2,7 @@ package io.youngwon.app.service;
 
 
 import io.youngwon.app.config.errors.NotFoundException;
+import io.youngwon.app.domain.categories.Categories;
 import io.youngwon.app.domain.products.Products;
 import io.youngwon.app.domain.products.ProductsRepository;
 import io.youngwon.app.web.dto.products.ProductsResponseDto;
@@ -23,10 +24,11 @@ public class ProductsService {
 
     @Transactional(readOnly = true)
     public ProductsResponseDto findById(Long id) {
-        return productsRepository
+        Products products = productsRepository
                 .findById(id)
-                .map(ProductsResponseDto::new)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
+
+        return new ProductsResponseDto(products);
     }
 
     @Transactional(readOnly = true)
@@ -38,15 +40,20 @@ public class ProductsService {
                 .collect(Collectors.toList());
     }
 
+
+    @Transactional(readOnly = true)
+    public List<ProductsListResponseDto> findByCategories(Long id) {
+        return productsRepository
+                .findByCategories(new Categories(id))
+                .stream()
+                .map(ProductsListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+
     @Transactional
     public Long save(Long userId, ProductsSaveRequestDto requestDto) {
-
-
 //        requestDto.saveImages();
-
-
-
-
         return productsRepository
                 .save(requestDto.toEntity())
                 .getId();

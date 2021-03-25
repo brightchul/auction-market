@@ -20,15 +20,19 @@ public class Users extends BaseTimeEntity {
 
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+//    @Enumerated(EnumType.STRING)
+//    private Role role;
 
+
+    public Users(Long id){
+        this.id = id;
+    }
 
     @Builder
     public Users(String name, String email, Role role){
         this.name = name;
         this.email = email;
-        this.role = role;
+//        this.role = role;
     }
 
 

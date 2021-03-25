@@ -19,6 +19,4 @@ public class CommentsListResponseDto {
         this.content = comments.getContent();
         this.createdAt = comments.getCreatedAt();
     }
-
-
 }

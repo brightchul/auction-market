@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, Grid, Header, Item } from "semantic-ui-react";
+import { Breadcrumb, Card, Grid, Header, Item } from "semantic-ui-react";
 
 
 interface Props {
@@ -10,6 +10,28 @@ interface Props {
 const ProductsList: React.FC<Props> = ({
   products
 }) => {
+
+
+
+
+  const getCategories: any = (category: any) => {
+      
+      return (
+        <>
+          {category.parent ? (
+            <>
+              {getCategories(category.parent)}
+              <Breadcrumb.Divider />
+            </>
+          ) : (
+            <></>
+          )}
+
+          <Breadcrumb>{category.title}</Breadcrumb>
+        </>
+      );
+  }
+
   return (
     <>
       <Header as="h3">상품목록</Header>
@@ -24,19 +46,28 @@ const ProductsList: React.FC<Props> = ({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: 'black'
+                backgroundColor: "black",
               }}
-              src={"https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-pro-13-og-202011?wid=600&hei=315&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1604347427000"}
+              src={
+                product.images.length > 0
+                  ? "/api/file/" + product.images[0].filename
+                  : ""
+              }
             />
             <Item.Content>
               <Item.Header>
-                <Link to="/products/1">{product.title}</Link>
+                <Link to={`/products/${product.id}`}>{product.title}</Link>
               </Item.Header>
               <Item.Meta>
                 <span className="price">$1200</span>
-                <span className="stay">1 Month</span>
+                <span className="stay">{product.endDate}</span>
               </Item.Meta>
               <Item.Description>{product.content}</Item.Description>
+              <Item.Extra>
+                <Breadcrumb>
+                  {getCategories(product.categories)}
+                </Breadcrumb>
+              </Item.Extra>
             </Item.Content>
           </Item>
         ))}

@@ -5,6 +5,7 @@ import io.youngwon.app.domain.auctions.Auctions;
 import io.youngwon.app.domain.auctions.AuctionsRepository;
 import io.youngwon.app.domain.products.Products;
 import io.youngwon.app.domain.products.ProductsRepository;
+import io.youngwon.app.domain.users.Users;
 import io.youngwon.app.web.dto.auctions.AuctionsCancelRequestDto;
 import io.youngwon.app.web.dto.auctions.AuctionsResponseDto;
 import io.youngwon.app.web.dto.auctions.AuctionsEnterRequestDto;
@@ -21,27 +22,29 @@ public class AuctionsService {
 
 
     @Transactional
-    public AuctionsResponseDto enter(AuctionsEnterRequestDto requestDto){
+    public AuctionsResponseDto enter(Long id, AuctionsEnterRequestDto requestDto, Long userId){
         Products products =  productsRepository
-                .findById(requestDto.getProductsId())
-                .orElseThrow(() -> new NotFoundException("Could not found product for " + requestDto.getProductsId()));
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
-        Auctions auctions = requestDto.toEntity(products);
+        Auctions auctions = auctionsRepository.save(requestDto.toEntity(products, new Users(userId)));
         products.addAuctions(auctions);
         return new AuctionsResponseDto(auctions);
     }
 
+
     @Transactional
-    public AuctionsResponseDto cancel(AuctionsCancelRequestDto requestDto){
+    public AuctionsResponseDto cancel(Long id, Long auctionId){
         Products products =  productsRepository
-                .findById(requestDto.getProductsId())
-                .orElseThrow(() -> new NotFoundException("Could not found product for " + requestDto.getProductsId()));
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
 //        Auctions auctions = auctionsRepository.findById(requestDto.getAuctoinsId())
 //                .orElseThrow(() -> new NotFoundException("Could not found auction for " + requestDto.getAuctoinsId()));
 
+        // 자신의 입찰이 가장 상위에 존재하면
         if(products.getAuctions().size() > 0 &&
-                products.getAuctions().get(0).getId() == requestDto.getAuctoinsId()){
+                products.getAuctions().get(0).getId() == auctionId){
             products.getAuctions().get(0).cancel();
         }
 
@@ -52,6 +55,16 @@ public class AuctionsService {
         return null;
     }
 
+
+
+
+    @Transactional
+    public void deleteAll(){
+
+
+        auctionsRepository.deleteAll();;
+
+    }
 
 
 }

@@ -42,27 +42,13 @@ export const registerProduct = createAsyncAction(
   REGISTER_PRODUCT_FAILURE,
 )<any, any, AxiosError>();
 
-const [
-  LOAD_PRODUCT,
-  LOAD_PRODUCT_SUCCESS,
-  LOAD_PRODUCT_FAILURE,
-] =  createActionTypes("register/LOAD_PRODUCT");
 
-export const loadProduct = createAsyncAction(
-  LOAD_PRODUCT,
-  LOAD_PRODUCT_SUCCESS,
-  LOAD_PRODUCT_FAILURE,
-)<any, any, AxiosError>();
-
-
-const loadProductSaga = createAsyncSaga(LOAD_PRODUCT, productsAPI.getProduct);
 const registerProductSaga = createAsyncSaga(REGISTER_PRODUCT, productsAPI.saveProduct);
 
 
 
 
 export function* registerSaga() {
-  yield takeLatest(LOAD_PRODUCT, loadProductSaga);
   yield takeLatest(REGISTER_PRODUCT, registerProductSaga);
 
 }
@@ -113,13 +99,7 @@ const register = createReducer<RegisterState, any>(initialState, {
       ...state.form,
       images
     }
-  }),
-  [LOAD_PRODUCT_SUCCESS]: (state, {payload: product}) => ({
-    ...state,
-    form: product
-  }),
-  
-  
+  }),  
 });
 
 export default register;

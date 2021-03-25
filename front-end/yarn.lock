@@ -2018,14 +2018,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-flatpickr@^3.8.3":
-  "integrity" "sha512-4HikDxKGulJXNfCs0icRVsDblsD2KS59unxxTIjLFxmzz4vg6bKhO00O/wy/Buvp23kxp52BG3Y077JH7Lj6LA=="
-  "resolved" "https://registry.npmjs.org/@types/react-flatpickr/-/react-flatpickr-3.8.3.tgz"
-  "version" "3.8.3"
-  dependencies:
-    "@types/react" "*"
-    "flatpickr" "^4.0.6"
-
 "@types/react-redux@^7.1.16":
   "integrity" "sha512-f/FKzIrZwZk7YEO9E1yoxIuDNRiDducxkFlkw/GNMGEnK9n4K8wJzlJBghpSuOVDgEUHoDkDF7Gi9lHNQR4siw=="
   "resolved" "https://registry.npmjs.org/@types/react-redux/-/react-redux-7.1.16.tgz"
@@ -5455,11 +5447,6 @@
     "flatted" "^3.1.0"
     "rimraf" "^3.0.2"
 
-"flatpickr@^4.0.6", "flatpickr@^4.6.2":
-  "integrity" "sha512-F0azNNi8foVWKSF+8X+ZJzz8r9sE1G4hl06RyceIaLvyltKvDl6vqk9Lm/6AUUCi5HWaIjiUbk7UpeE/fOXOpw=="
-  "resolved" "https://registry.npmjs.org/flatpickr/-/flatpickr-4.6.9.tgz"
-  "version" "4.6.9"
-
 "flatted@^3.1.0":
   "integrity" "sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA=="
   "resolved" "https://registry.npmjs.org/flatted/-/flatted-3.1.1.tgz"
@@ -7836,6 +7823,11 @@
   "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   "version" "1.0.4"
 
+"moment@^2.29.1":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
+
 "move-concurrently@^1.0.1":
   "integrity" "sha1-viwAX9oy4LKa8fBdfEszIUxwH5I="
   "resolved" "https://registry.npmjs.org/move-concurrently/-/move-concurrently-1.0.1.tgz"
@@ -9364,7 +9356,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@^15.5.10", "prop-types@^15.6.2", "prop-types@^15.7.2":
+"prop-types@^15.6.2", "prop-types@^15.7.2":
   "integrity" "sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   "version" "15.7.2"
@@ -9588,14 +9580,6 @@
   "integrity" "sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA=="
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
   "version" "3.2.0"
-
-"react-flatpickr@^3.10.7":
-  "integrity" "sha512-dJ7cZAayefqWJnX4Xe8Piy13oK2h4aeGCH9tz+D2iSNh+kbezUAWVMVCKdTqjsNBqTMS4v0DkfMy2CP2atNCTQ=="
-  "resolved" "https://registry.npmjs.org/react-flatpickr/-/react-flatpickr-3.10.7.tgz"
-  "version" "3.10.7"
-  dependencies:
-    "flatpickr" "^4.6.2"
-    "prop-types" "^15.5.10"
 
 "react-images-uploading@^3.1.2":
   "integrity" "sha512-Yy7r+I/f1gPM1qN95uvAoHOTGMG23Bu4kgXQLJoS7rnAQ/InpI3y6U0S0QMMCX+85c1JNdNZl4Bn/Z4ge39emQ=="
@@ -11570,6 +11554,25 @@
   "integrity" "sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY="
   "resolved" "https://registry.npmjs.org/tty-browserify/-/tty-browserify-0.0.0.tgz"
   "version" "0.0.0"
+
+"tui-code-snippet@^2.2.0":
+  "integrity" "sha512-6jGbM/m7A2L59lJSripwMVp87awrWgJXezlLV8GuAha3s0k01E4+MndoU5WlXd4dauVRgzHhKguTVslx/jMehw=="
+  "resolved" "https://registry.npmjs.org/tui-code-snippet/-/tui-code-snippet-2.3.2.tgz"
+  "version" "2.3.2"
+
+"tui-date-picker@^4.2.0":
+  "integrity" "sha512-SDI3RRWOimhIAVRC23fpwxpp7q1wJu+fzNZYgOw2OyAYTa+R2oOjqUHzHEIK4OBMiasvHwWUyIztnAXoizQUeA=="
+  "resolved" "https://registry.npmjs.org/tui-date-picker/-/tui-date-picker-4.2.0.tgz"
+  "version" "4.2.0"
+  dependencies:
+    "tui-time-picker" "^2.0.3"
+
+"tui-time-picker@^2.0.3":
+  "integrity" "sha512-S9pkPyAhixYMYsWIA/acaLBuoFBJGohWl9sQyWzSupqEYY4s+QNStl3kJ76Q29VkTl51+LrXm+0SJ1inP0Sheg=="
+  "resolved" "https://registry.npmjs.org/tui-time-picker/-/tui-time-picker-2.0.3.tgz"
+  "version" "2.0.3"
+  dependencies:
+    "tui-code-snippet" "^2.2.0"
 
 "tunnel-agent@^0.6.0":
   "integrity" "sha1-J6XeoGs2sEoKmWZ3SykIaPD8QP0="

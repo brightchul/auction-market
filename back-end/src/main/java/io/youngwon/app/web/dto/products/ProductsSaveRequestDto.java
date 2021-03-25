@@ -31,10 +31,9 @@ public class ProductsSaveRequestDto {
 
     private Long startPrice;
 
-    private String startDate;
+    private String startDateTime;
 
     private String endDateTime;
-
 
     @NotNull(message = "categories must be provided")
     private Long categories;

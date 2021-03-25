@@ -30,10 +30,12 @@ public class Auctions extends BaseTimeEntity {
     private Long price;
 
     @Builder
-    public Auctions(Products products, Long price){
+    public Auctions(Products products, Long price, Users participants){
         this.products = products;
         this.price = price;
+        this.participants = participants;
         this.isCancel = false;
+
     }
 
 

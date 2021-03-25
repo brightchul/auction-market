@@ -1,7 +1,12 @@
 import axios from "axios";
 import { AnchorHTMLAttributes } from "react";
 
-export const loadProducts = () => axios.get("/api/products");
+export const loadProducts = (id: number) => {
+  if (id) {
+    return axios.get(`/api/products/categories/${id}`);
+  }
+  return axios.get(`/api/products`);
+}
 
 export const getProduct = (id: number) => axios.get(`/api/products/${id}`);
 

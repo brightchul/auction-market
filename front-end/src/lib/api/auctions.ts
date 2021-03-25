@@ -3,13 +3,9 @@ import axios from "axios";
 export const loadAuctions = (id: number) =>
   axios.get(`/api/products/${id}/auctions`);
 
-export const getProduct = (id: number) => axios.get(`/api/products/${id}`);
+export const enterAuctions = (id: number) =>
+  axios.patch(`/api/products/${id}/auctions`);
 
-export const saveAuctions = (id: number) =>
-  axios.post(`/api/products/${id}/auctions`);
+export const cancelProduct = ({ pid, aid }: { pid: number; aid: number }) =>
+  axios.patch(`/api/products/${pid}/auctions/${aid}`);
 
-export const updateProduct = (id: number) =>
-  axios.put(`/api/products/${id}/auctions`);
-
-export const deleteProduct = (id: number) =>
-  axios.delete(`/api/products/${id}/auctions`);

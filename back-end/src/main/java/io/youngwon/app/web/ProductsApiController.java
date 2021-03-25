@@ -31,8 +31,8 @@ public class ProductsApiController {
 
     // 페이징 지원 필요
     @GetMapping("categories/{id}")
-    public ApiResult<ProductsResponseDto> findByCategories(@PathVariable Long id) {
-        return success(productsService.findById(id));
+    public ApiResult<List<ProductsListResponseDto>> findByCategories(@PathVariable Long id) {
+        return success(productsService.findByCategories(id));
     }
 
 

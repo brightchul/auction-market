@@ -29,7 +29,7 @@ export const loadProducts = createAsyncAction(
   LOAD_PRODUCTS,
   LOAD_PRODUCTS_SUCCESS,
   LOAD_PRODUCTS_FAILURE
-)<void, any, AxiosError>();
+)<any, any, AxiosError>();
 
 // 카테고리 목록
 const [

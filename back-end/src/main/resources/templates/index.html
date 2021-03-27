@@ -12,9 +12,10 @@
 
 
 <script>
-    var sock = new SockJS('http://localhost:8080/ws');
+    var sock = new SockJS('ws://localhost:8080/ws');
     stompClient = Stomp.over(sock);
     stompClient.connect({}, function () {
+        console.log('connteded')
         stompClient.subscribe("/topic/auctions", function (msg) {
             console.log('received from server ', msg);
         });
@@ -25,8 +26,50 @@
         }));
     })
 
-
-
+    // var wsUri = "ws://localhost:8080/ws";
+    // var websocket;
+    //
+    // function connect() {
+    //     if (!websocket) {
+    //         websocket = new WebSocket(wsUri);
+    //         websocket.onopen = function (evt) {
+    //             onOpen(evt)
+    //         };
+    //         websocket.onmessage = function (evt) {
+    //             onMessage(evt)
+    //         };
+    //         websocket.onerror = function (evt) {
+    //             onError(evt)
+    //         };
+    //     }
+    // }
+    //
+    // function disconnect() {
+    //     if (!websocket) websocket.close();
+    // }
+    //
+    // function send_message() {
+    //     websocket.send(message);
+    // }
+    //
+    // function onOpen(evt) {
+    //     console.log('connect');
+    // }
+    //
+    // function onMessage(evt) {
+    //     console.log('connect');
+    // }
+    //
+    // function onError(evt) {
+    //     console.log('error');
+    // }
+    //
+    // function writeToScreen(message) {
+    //     ;
+    // }
+    // // window.addEventListener("load", init, false);
+    //
+    // connect();
 </script>
 </body>
 </html>

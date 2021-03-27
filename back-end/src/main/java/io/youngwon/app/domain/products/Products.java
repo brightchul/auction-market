@@ -1,6 +1,7 @@
 package io.youngwon.app.domain.products;
 
 
+import io.youngwon.app.Constant;
 import io.youngwon.app.domain.BaseTimeEntity;
 import io.youngwon.app.domain.auctions.Auctions;
 import io.youngwon.app.domain.categories.Categories;
@@ -13,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -42,6 +44,7 @@ public class Products extends BaseTimeEntity {
 
     private String content;
 
+    @ColumnDefault("0")
     private Integer viewCount;
 
     private Long startPrice;
@@ -49,8 +52,6 @@ public class Products extends BaseTimeEntity {
     private LocalDateTime startDateTime;
 
     private LocalDateTime endDateTime;
-
-    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm A");
 
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Files> files = new ArrayList<Files>();
@@ -62,7 +63,6 @@ public class Products extends BaseTimeEntity {
     @OrderBy("createdAt desc")
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comments> comments = new ArrayList<Comments>();
-
 
 
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -77,22 +77,18 @@ public class Products extends BaseTimeEntity {
         this.startPrice = requestDto.getStartPrice();
         this.categories = new Categories(requestDto.getCategories());
 
+        // 포맷 체크
 
-        if (StringUtils.isBlank(requestDto.getStartDateTime())) {
-            this.startDateTime = LocalDateTime.parse(requestDto.getStartDateTime(), formatter);
+        this.startDateTime = LocalDateTime.parse(requestDto.getStartDateTime(), Constant.FORMATTER);
+        this.endDateTime = LocalDateTime.parse(requestDto.getEndDateTime(), Constant.FORMATTER);
+
+
+        if(requestDto.getImages() != null) {
+            this.files.addAll(Arrays.stream(requestDto.getImages())
+                    .map(n -> new Files(this, n))
+                    .collect(Collectors.toList()));
         }
-
-        if (StringUtils.isBlank(requestDto.getStartDateTime())) {
-            this.endDateTime = LocalDateTime.parse(requestDto.getEndDateTime(), formatter);
-        }
-
-
-        this.files.addAll(Arrays.stream(requestDto.getImages())
-                .map(n -> new Files(this, n))
-                .collect(Collectors.toList()));
-
     }
-
 
     public void update(String title, String content, Long startPrice) {
         this.title = title;

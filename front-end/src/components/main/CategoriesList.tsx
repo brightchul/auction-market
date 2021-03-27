@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { Header, List } from "semantic-ui-react";
+import { Dimmer, Header, List, Loader } from "semantic-ui-react";
 
 interface Props{
   categories: any;
@@ -33,7 +33,8 @@ const CategoriesList: React.FC<Props> = ({ categories }) => {
   return (
     <>
       <Header as="h3">카테고리</Header>
-      <List>{categories.map((category: any) => get(category))}</List>
+      {!categories && <Loader active inline='centered' />}
+      {categories && <List>{categories.map((category: any) => get(category))}</List>}
     </>
   );
 };

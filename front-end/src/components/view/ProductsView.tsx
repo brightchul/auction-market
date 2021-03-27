@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Breadcrumb, Button, Form, Grid, Header, Icon, Label, Modal, Statistic } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Breadcrumb, Button, Form, Grid, Header, Icon, Label, Loader, Modal, Statistic } from "semantic-ui-react";
 import AuctionsList from "./AuctionsList";
 import CommentsList from "./CommentsList";
 import Dashboard from "./Dashboard";
 import Description from "./Description";
-import ReactECharts from 'echarts-for-react';
+import ReactECharts, { EChartsOption } from 'echarts-for-react';
 interface Props {
   product: any;
   form: any;
@@ -15,6 +15,7 @@ interface Props {
   handleUpdateComment: any;
   handleDeleteComment: any;
   handleToggleLike: any;
+  handleChangeAuction: any;
   handleEnterAuction: any;
   handleCancelAuction: any;
 }
@@ -29,31 +30,68 @@ const ProductsView: React.FC<Props> = ({
   handleUpdateComment,
   handleDeleteComment,
   handleToggleLike,
+  handleChangeAuction,
   handleEnterAuction,
   handleCancelAuction,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const options = {
-    grid: { top: 8, right: 8, bottom: 24, left: 36 },
+  const [options, setOptions] = useState<EChartsOption>({
+    grid: { top: 8, right: 8, bottom: 24, left: 80 },
+    dataZoom: {
+      type: 'inside'
+      
+    },
     xAxis: {
-      type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      type: "time",
     },
     yAxis: {
-      type: 'value',
+      type: "value",
     },
     series: [
       {
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line',
+        data: [],
+        type: "line",
         smooth: true,
       },
     ],
     tooltip: {
-      trigger: 'axis',
+      trigger: "axis",
     },
-  };
+  });
 
+
+  useEffect(()=>{
+    if(product){
+
+      const data = [
+        [new Date(product?.startDateTime), null],
+        ...product?.auctions.map((auction: any) => [
+          auction.createdAt,
+          auction.price,
+        ]),
+        [new Date(product?.endDateTime), null]
+      ];
+
+
+      setOptions({
+        ...options,
+        dataZoom: {
+          type: 'inside',
+          // startValue: '',
+          endValue: new Date(),
+        },
+        series : [
+          {
+            data: data ,
+            type: "line",
+            smooth: true,
+          },
+        ]
+      })
+    }
+
+  },[product]);
+  
   return (
     <>
       {/* <Breadcrumb>
@@ -68,23 +106,28 @@ const ProductsView: React.FC<Props> = ({
       <Grid>
         <Grid.Row columns="2">
           <Grid.Column>
-            <Header
-              as="h2"
-              content={product.title}
-              subheader="Manage your account settings and set email preferences"
-            />
+            {product && (
+              <Header
+                as="h2"
+                content={product.title}
+                subheader="Manage your account settings and set email preferences"
+              />
+            )}
           </Grid.Column>
           <Grid.Column textAlign="right">
             <Button
-              color="red"
+              loading={!product}
+              type="button"
+              color={product?.isLike ? "red" : undefined}
               content="Like"
               icon="heart"
-              label={{
-                basic: true,
-                color: "red",
-                pointing: "left",
-                content: "2,048",
-              }}
+              // label={{
+              //   basic: true,
+              //   color: product?.isLike ? "red" : undefined,
+              //   pointing: "left",
+              //   content: `${product ? product.numOfLike : <Loader active inline />}`,
+              // }}
+              onClick={handleToggleLike}
             />
             <Modal
               basic
@@ -93,7 +136,7 @@ const ProductsView: React.FC<Props> = ({
               open={open}
               size="small"
               trigger={
-                <Button basic color="green">
+                <Button basic color="green" loading={!product}>
                   입찰하기
                 </Button>
               }
@@ -109,7 +152,7 @@ const ProductsView: React.FC<Props> = ({
               </p> */}
                 <Form>
                   <Form.Field>
-                    <input placeholder="First Name" />
+                    <input name="price" onChange={handleChangeAuction} />
                   </Form.Field>
                 </Form>
               </Modal.Content>
@@ -122,7 +165,7 @@ const ProductsView: React.FC<Props> = ({
                 >
                   <Icon name="remove" /> No
                 </Button>
-                <Button color="green" inverted onClick={() => setOpen(false)}>
+                <Button color="green" inverted onClick={handleEnterAuction}>
                   <Icon name="checkmark" /> Yes
                 </Button>
               </Modal.Actions>
@@ -132,10 +175,10 @@ const ProductsView: React.FC<Props> = ({
 
         <Grid.Row>
           <Grid.Column width={10}>
-            <Description products={product} />
+            <Description product={product} />
           </Grid.Column>
           <Grid.Column width={6}>
-            <Dashboard />
+            <Dashboard product={product} />
           </Grid.Column>
         </Grid.Row>
 
@@ -144,6 +187,8 @@ const ProductsView: React.FC<Props> = ({
             <Header as="h3" dividing>
               상세설명
             </Header>
+            {!product && <Loader active inline="centered" />}
+            {product && product.content}
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns="1">
@@ -151,20 +196,24 @@ const ProductsView: React.FC<Props> = ({
             <Header as="h3" dividing>
               분석
             </Header>
-            <ReactECharts option={options} />
+            {!product && <Loader active inline="centered" />}
+            {product && <ReactECharts option={options} />}
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns="1">
           <Grid.Column>
-            <CommentsList 
-              form={form.comments}
-              comments={comments}
-              handleChange={handleChangeComment}
-              handleToggleCommentMode={handleToggleCommentMode}
-              handleRegisterComment={handleRegisterComment}
-              handleUpdateComment={handleUpdateComment}
-              handleDeleteComment={handleDeleteComment}
-            />
+            {!comments && <Loader active inline="centered" />}
+            {comments && (
+              <CommentsList
+                form={form.comments}
+                comments={comments}
+                handleChange={handleChangeComment}
+                handleToggleCommentMode={handleToggleCommentMode}
+                handleRegisterComment={handleRegisterComment}
+                handleUpdateComment={handleUpdateComment}
+                handleDeleteComment={handleDeleteComment}
+              />
+            )}
           </Grid.Column>
         </Grid.Row>
       </Grid>

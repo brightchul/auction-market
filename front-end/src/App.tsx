@@ -31,6 +31,7 @@ const App: React.FC = () => {
           component={ProductsRegisterPage}
         />
         <Route exact path="/products/:id" component={ProductsViewPage} />
+        <Route exact path="/products/:id/:mode" component={ProductsRegisterPage} />
         <Route exact path="/profile" component={ProfilePage} />
       </Switch>
     </AppWrapper>

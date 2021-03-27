@@ -13,9 +13,14 @@ import createAsyncSaga, { createActionTypes } from "../lib/createAsyncSaga";
 import * as productsAPI from "../lib/api/products";
 import { AxiosError } from "axios";
 
-const CHANGE_FIELD = "register/CHANGE_FIELD";
 const INITIALIZE_FORM = "register/INITIALIZE_FORM";
+const CHANGE_FIELD = "register/CHANGE_FIELD";
 const SET_IMAGES = "register/SET_IMAGES";
+
+export const initializeForm = createAction(
+  INITIALIZE_FORM,
+  ()=>{}
+)();
 
 export const changeField = createAction(
   CHANGE_FIELD,
@@ -42,14 +47,28 @@ export const registerProduct = createAsyncAction(
   REGISTER_PRODUCT_FAILURE,
 )<any, any, AxiosError>();
 
+const [
+  LOAD_PRODUCT,
+  LOAD_PRODUCT_SUCCESS,
+  LOAD_PRODUCT_FAILURE,
+] = createActionTypes("register/LOAD_PRODUCT");
+
+export const loadProduct = createAsyncAction(
+  LOAD_PRODUCT,
+  LOAD_PRODUCT_SUCCESS,
+  LOAD_PRODUCT_FAILURE,
+)<any, any, AxiosError>();
+
 
 const registerProductSaga = createAsyncSaga(REGISTER_PRODUCT, productsAPI.saveProduct);
+const loadProductSaga = createAsyncSaga(LOAD_PRODUCT, productsAPI.getProduct);
 
 
 
 
 export function* registerSaga() {
   yield takeLatest(REGISTER_PRODUCT, registerProductSaga);
+  yield takeLatest(LOAD_PRODUCT, loadProductSaga);
 
 }
 
@@ -85,6 +104,7 @@ type ChangeFieldAction = ActionType<typeof changeField>;
 const register = createReducer<RegisterState, any>(initialState, {
   [INITIALIZE_FORM]: (state) => ({
     ...state,
+    form: initialState.form
   }),
   [CHANGE_FIELD]: (
     state, 
@@ -99,7 +119,11 @@ const register = createReducer<RegisterState, any>(initialState, {
       ...state.form,
       images
     }
-  }),  
+  }),
+  [LOAD_PRODUCT_SUCCESS]: (state, { payload: product }) => ({
+    ...state,
+    form: product
+  })
 });
 
 export default register;

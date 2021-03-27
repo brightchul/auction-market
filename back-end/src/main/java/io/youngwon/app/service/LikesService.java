@@ -26,6 +26,10 @@ public class LikesService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
+
+        // 이미 존재하면
+
+
         return products.like(new Likes(products, new Users(userId)));
     }
 
@@ -36,11 +40,13 @@ public class LikesService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
-        Likes likes = products.getLikes()
+        // 존재하지 않으면
+
+       Likes likes = products.getLikes()
                 .stream().filter(like->like.getUsers().getId() == userId).findFirst()
                 .orElseThrow(() -> new NotFoundException("Could not found likes for products " + id + " and user " + userId));
 
-        return products.unlike(likes);
+       return products.unlike(likes);
     }
 
 }

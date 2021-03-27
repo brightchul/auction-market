@@ -96,14 +96,14 @@ const ProductsForm: React.FC<Props> = ({
         subheader="Manage your account settings and set email preferences"
       />
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} loading={!categories}>
         <Form.Field
           label="카테고리"
           control="select"
           name="categories"
           onChange={handleChange}
         >
-          {categories.map((category: any) => get(category))}
+          {categories && categories.map((category: any) => get(category))}
         </Form.Field>
         <ImageUploading
           multiple

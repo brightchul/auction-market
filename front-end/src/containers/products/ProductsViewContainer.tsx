@@ -5,6 +5,7 @@ import { Grid } from "semantic-ui-react";
 import ProductsView from "../../components/view/ProductsView";
 import { RootState } from "../../modules";
 import {
+  initialize,
   loadProduct,
   loadComments,
   registerComment,
@@ -12,6 +13,12 @@ import {
   deleteComment,
   changeCommentField,
   toggleCommentMode,
+  like,
+  unLike,
+  changeAuctionField,
+  enterAuctions,
+  cancelAuctions,
+  
 } from "../../modules/product";
 
 
@@ -28,8 +35,10 @@ const ProductsViewContainer: React.FC<Props> = ({
   const dispatch = useDispatch();
   const { id } : { id? : number} = match.params;
   
+  
 
   const {
+    // loading,
     categories,
     product,
     form,
@@ -37,6 +46,7 @@ const ProductsViewContainer: React.FC<Props> = ({
     error,
   } = useSelector(
     (state: RootState) => ({
+      // loading: state.loading["product/LOAD_PRODUCT"],
       categories: state.main.categories,
       product: state.product.product,
       form: state.product.form,
@@ -49,6 +59,10 @@ const ProductsViewContainer: React.FC<Props> = ({
   useEffect(()=>{
     dispatch(loadProduct.request(id));
     dispatch(loadComments.request(id));
+
+    return ()=>{
+      dispatch(initialize());
+    }
   },[dispatch]);
 
 
@@ -57,8 +71,9 @@ const ProductsViewContainer: React.FC<Props> = ({
     dispatch(changeCommentField({ key: name, value }));
   };
 
-  const handleChangeAuction = () => {
-      
+  const handleChangeAuction = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    dispatch(changeAuctionField({ key: name, value }));
   }
 
 
@@ -85,11 +100,16 @@ const ProductsViewContainer: React.FC<Props> = ({
   }
 
   const handleToggleLike = () => {
-
+    if(!product.isLike){
+      dispatch(like.request(id));
+    }else{
+      dispatch(unLike.request(id));
+    }
   }
 
   const handleEnterAuction = () => {
-
+    const { price } = form.auctions;
+    dispatch(enterAuctions.request({id, price}));
   }
 
   const handleCancelAuction = () => {
@@ -100,24 +120,25 @@ const ProductsViewContainer: React.FC<Props> = ({
 
 
   return (
-    <Grid>
+    <Grid >
       <Grid.Row columns="1">
         <Grid.Column>
-          {product && (
-            <ProductsView
-              product={product}
-              form={form}
-              comments={comments}
-              handleChangeComment={handleChangeComment}
-              handleToggleCommentMode={handleToggleCommentMode}
-              handleRegisterComment={handleRegisterComment}
-              handleUpdateComment={handleUpdateComment}
-              handleDeleteComment={handleDeleteComment}
-              handleToggleLike={handleToggleLike}
-              handleEnterAuction={handleEnterAuction}
-              handleCancelAuction={handleCancelAuction}
-            />
-          )}
+          
+          <ProductsView
+            product={product}
+            form={form}
+            comments={comments}
+            handleChangeComment={handleChangeComment}
+            handleToggleCommentMode={handleToggleCommentMode}
+            handleRegisterComment={handleRegisterComment}
+            handleUpdateComment={handleUpdateComment}
+            handleDeleteComment={handleDeleteComment}
+            handleToggleLike={handleToggleLike}
+            handleChangeAuction={handleChangeAuction}
+            handleEnterAuction={handleEnterAuction}
+            handleCancelAuction={handleCancelAuction}
+          />
+        
         </Grid.Column>
       </Grid.Row>
     </Grid>

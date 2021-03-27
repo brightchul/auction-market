@@ -7,11 +7,15 @@ import io.youngwon.app.domain.products.Products;
 import io.youngwon.app.domain.products.ProductsRepository;
 import io.youngwon.app.domain.users.Users;
 import io.youngwon.app.web.dto.auctions.AuctionsCancelRequestDto;
+import io.youngwon.app.web.dto.auctions.AuctionsListResponseDto;
 import io.youngwon.app.web.dto.auctions.AuctionsResponseDto;
 import io.youngwon.app.web.dto.auctions.AuctionsEnterRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -22,14 +26,15 @@ public class AuctionsService {
 
 
     @Transactional
-    public AuctionsResponseDto enter(Long id, AuctionsEnterRequestDto requestDto, Long userId){
+    public List<AuctionsListResponseDto> enter(Long id, AuctionsEnterRequestDto requestDto, Long userId){
         Products products =  productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
         Auctions auctions = auctionsRepository.save(requestDto.toEntity(products, new Users(userId)));
         products.addAuctions(auctions);
-        return new AuctionsResponseDto(auctions);
+
+        return products.getAuctions().stream().map(AuctionsListResponseDto::new).collect(Collectors.toList());
     }
 
 

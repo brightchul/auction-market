@@ -29,10 +29,13 @@ public class ProductsSaveRequestDto {
 
     private Images[] images;
 
+    @NotNull(message = "startPrice must be provided")
     private Long startPrice;
 
+    @NotBlank(message = "startDateTime must be provided")
     private String startDateTime;
 
+    @NotBlank(message = "endDateTime must be provided")
     private String endDateTime;
 
     @NotNull(message = "categories must be provided")

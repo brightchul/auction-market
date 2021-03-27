@@ -3,7 +3,7 @@ import { startLoading, finishLoading } from '../modules/loading';
 
 
 
-export const createActionTypes = (type: any) => {
+export const createActionTypes = (type: string) => {
   const SUCCESS = `${type}_SUCCESS`;
   const FAILURE = `${type}_FAILURE`;
   return [type, SUCCESS, FAILURE];
@@ -11,7 +11,7 @@ export const createActionTypes = (type: any) => {
 
 
 
-export default function createAsyncSaga(type: any, request: any) {
+export default function createAsyncSaga(type: string, request: any) {
   const SUCCESS = `${type}_SUCCESS`;
   const FAILURE = `${type}_FAILURE`;
   
@@ -19,8 +19,6 @@ export default function createAsyncSaga(type: any, request: any) {
     yield put(startLoading(type)); // 로딩 시작
     try {
       const response = yield call(request, action.payload);
-
-      console.log(response);
 
       yield put({
         type: SUCCESS,

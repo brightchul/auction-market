@@ -7,9 +7,11 @@ import ProductsForm from "../../components/products/ProductsForm";
 import { RootState } from "../../modules";
 import { loadCategories } from "../../modules/main";
 import {
+  initializeForm,
   changeField,
   setImages,
   registerProduct,
+  loadProduct,
 } from "../../modules/register";
 
 
@@ -17,7 +19,11 @@ interface Props extends RouteComponentProps{
 
 }
 
-const ProductsRegisterContainer: React.FC<Props> = ({ history }) => {
+const ProductsRegisterContainer: React.FC<Props> = ({ history, match }) => {
+
+  const { id } : { id? : number} = match.params;
+  const { mode } : { mode? : string} = match.params;
+
 
   const dispatch = useDispatch();
   const {
@@ -36,7 +42,11 @@ const ProductsRegisterContainer: React.FC<Props> = ({ history }) => {
 
   useEffect(()=>{
     dispatch(loadCategories.request());
-    
+    console.log(id, mode);
+    if(mode === 'edit'){
+      dispatch(loadProduct.request(id));
+    }
+
   },[dispatch]);
 
 
@@ -67,13 +77,26 @@ const ProductsRegisterContainer: React.FC<Props> = ({ history }) => {
 
   const handleSubmit = (e: React.FormEvent<FormEvent>) => {
     e.preventDefault();
-    const { categories, title, content, images, startPrice, startDateTime, endDateTime } = form;
+    const {
+      categories,
+      title,
+      content,
+      images,
+      startPrice,
+      startDateTime,
+      endDateTime,
+    } = form;
     
-    dispatch(registerProduct.request({ ...form }));
+    if(mode === 'edit'){
 
+    }else{
+      dispatch(registerProduct.request({ ...form }));
+    }
     // 성공시
     history.push("/");
   }
+
+  
 
   // 성공시
 
@@ -84,6 +107,7 @@ const ProductsRegisterContainer: React.FC<Props> = ({ history }) => {
   }
 
 
+  // 수정보드일시 load를 통해 검사
 
   return (
     <Grid>

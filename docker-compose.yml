@@ -2,6 +2,9 @@ version: '3'
 services:
   nginx:
     restart: always
+    depends_on:
+      - front-end
+      - back-end
     build:
       dockerfile: Dockerfile
       context: ./nginx

@@ -16,13 +16,26 @@ export const saveProduct = ({
   images,
   content,
   startPrice,
+  startDateTime,
+  endDateTime,
 }: {
   categories: any;
   title: any;
   images: any;
   content: any;
   startPrice: any;
-}) => axios.post(`/api/products`, { categories, images, title, content, startPrice });
+  startDateTime: string;
+  endDateTime: string;
+}) =>
+  axios.post(`/api/products`, {
+    categories,
+    images,
+    title,
+    content,
+    startPrice,
+    startDateTime,
+    endDateTime,
+  });
 
 export const updateProduct = () => axios.put(`/api/products`);
 

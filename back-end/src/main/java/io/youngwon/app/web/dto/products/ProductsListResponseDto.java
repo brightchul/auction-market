@@ -22,13 +22,14 @@ public class ProductsListResponseDto {
     private String title;
     private String content;
     private Long startPrice;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private String startDateTime;
+    private String endDateTime;
     private List<FilesListResponseDto> images;
 
     private Integer numOfLike;
     private Boolean isLike;
-
+    private Integer viewCount;
+    private Long price;
 
     private List<CategoriesTitleResponseDto> categories = new ArrayList<CategoriesTitleResponseDto>();
 
@@ -45,9 +46,10 @@ public class ProductsListResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.startPrice = entity.getStartPrice();
-        this.startDateTime = entity.getStartDateTime();
-        this.endDateTime = entity.getEndDateTime();
+        this.startDateTime = entity.getStartDateTime().format(Constant.FORMATTER);
+        this.endDateTime = entity.getEndDateTime().format(Constant.FORMATTER);
 
+        this.viewCount = entity.getViewCount();
 //        this.categories = new CategoriesResponseDto(entity.getCategories());
 
         // 가장 하위
@@ -55,6 +57,10 @@ public class ProductsListResponseDto {
         while(temp != null){
             this.categories.add(0, new CategoriesTitleResponseDto(temp));
             temp = temp.getParent();
+        }
+
+        if(entity.getAuctions().size() > 0) {
+            this.price = entity.getAuctions().get(0).getPrice();
         }
 
 

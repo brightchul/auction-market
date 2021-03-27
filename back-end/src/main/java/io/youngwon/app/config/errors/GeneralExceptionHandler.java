@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.validation.ConstraintViolationException;
+import javax.validation.UnexpectedTypeException;
 
 import static io.youngwon.app.utils.ApiUtils.error;
 
@@ -54,11 +55,12 @@ public class GeneralExceptionHandler {
             IllegalStateException.class,
             ConstraintViolationException.class,
             MethodArgumentNotValidException.class,
-            HttpMessageNotReadableException.class
+            HttpMessageNotReadableException.class,
     })
     public ResponseEntity<?> handleBadRequestException(Exception e) {
         log.debug("Bad request exception occurred: {}", e.getMessage(), e);
         if (e instanceof MethodArgumentNotValidException) {
+
             return newResponse(
                     ((MethodArgumentNotValidException) e).getBindingResult().getAllErrors().get(0).getDefaultMessage(),
                     HttpStatus.BAD_REQUEST
@@ -66,6 +68,7 @@ public class GeneralExceptionHandler {
         }
         return newResponse(e, HttpStatus.BAD_REQUEST);
     }
+
 
     @ExceptionHandler(HttpMediaTypeException.class)
     public ResponseEntity<?> handleHttpMediaTypeException(Exception e) {
@@ -83,3 +86,5 @@ public class GeneralExceptionHandler {
         return newResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+
+

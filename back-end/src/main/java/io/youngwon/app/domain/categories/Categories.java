@@ -2,12 +2,14 @@ package io.youngwon.app.domain.categories;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.youngwon.app.domain.BaseTimeEntity;
+import io.youngwon.app.domain.products.Products;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -28,10 +30,16 @@ public class Categories extends BaseTimeEntity {
     private Categories parent;
 
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Products> products = new ArrayList<Products>();
+
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
     private List<Categories> children;
+
+
 
     public Categories(Long id) {
         this.id = id;

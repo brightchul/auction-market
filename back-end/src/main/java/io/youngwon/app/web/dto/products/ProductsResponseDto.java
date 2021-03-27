@@ -21,7 +21,9 @@ public class ProductsResponseDto {
     private String title;
     private String content;
     private Long startPrice;
-
+    private String startDateTime;
+    private String endDateTime;
+    private Integer viewCount;
     private List<AuctionsListResponseDto> auctions;
 //    private List<CommentsListResponseDto> comments;
 
@@ -36,6 +38,7 @@ public class ProductsResponseDto {
     private Integer numOfAuctions;
     private Integer numOfParticipant;
 
+    private Long price;
 
 
     // 카테고리
@@ -48,6 +51,9 @@ public class ProductsResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.startPrice = entity.getStartPrice();
+        this.startDateTime = entity.getStartDateTime().format(Constant.FORMATTER);
+        this.endDateTime = entity.getEndDateTime().format(Constant.FORMATTER);
+
         if(entity.getFiles() != null) {
             this.images = entity.getFiles().stream().map(FilesListResponseDto::new).collect(Collectors.toList());
         }
@@ -55,6 +61,8 @@ public class ProductsResponseDto {
         this.auctions = entity.getAuctions().stream().map(AuctionsListResponseDto::new).collect(Collectors.toList());
 
         this.numOfLike = entity.getLikes().size();
+        this.viewCount = entity.getViewCount();
+
 
         // 내가 지금 라이크를 하고 있는가?
         this.isLike = entity.getLikes()
@@ -67,6 +75,10 @@ public class ProductsResponseDto {
                 .stream()
                 .map(auction->auction.getParticipants().getId())
                 .collect(Collectors.toSet()).size();
+
+        if(entity.getAuctions().size() > 0) {
+            this.price = entity.getAuctions().get(0).getPrice();
+        }
 
         Categories temp = entity.getCategories();
         while(temp != null){

@@ -1,9 +1,9 @@
 import { eventChannel  } from 'redux-saga';
 
 
-export function createSocketChannel(socket: any) {
+export function createSocketChannel(url: string, socket: any) {
   return eventChannel(emit => {
-    socket.subscribe('/topic/auctions', (payload: any) => {
+    socket.subscribe(url, (payload: any) => {
       emit(payload);
     });
     const unsubscribe = () => {

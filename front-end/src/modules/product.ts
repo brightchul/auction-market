@@ -249,7 +249,7 @@ function createDataSocket() {
 
 
 
-function* listenData() { 
+function* listenAuction() { 
   let socket;
   let socketChannel;
   
@@ -257,7 +257,47 @@ function* listenData() {
     // 소캣 생성
     socket        = yield call(createDataSocket);
     // 채널 생성
-    socketChannel = yield call(createSocketChannel, socket);
+    socketChannel = yield call(createSocketChannel, '/topic/auctions', socket);
+    
+    // yield fork(writeSocket, socket); 
+
+
+    while(true) {
+      // 새로운 채팅
+      const result = yield take(socketChannel);
+      const auction = JSON.parse(result.body);
+      console.log('receviced from server : ',auction);
+      yield put(refreshAuction({
+        id: auction.productsId,
+        price: auction.price,
+      }));
+    }
+
+  } catch (error) {
+    console.log(error);
+  } finally {
+    if (yield cancelled()) {
+      // close the channel
+      socketChannel.close();
+
+      // // close the WebSocket connection
+      socket.deactivate();
+    } else {
+      // yield dispatch(LiveDataActions.connectionError('WebSocket disconnected'));
+    }
+  }
+}
+
+
+function* listenFinish() { 
+  let socket;
+  let socketChannel;
+  
+  try{
+    // 소캣 생성
+    socket        = yield call(createDataSocket);
+    // 채널 생성
+    socketChannel = yield call(createSocketChannel, '/topic/finish', socket);
     
     // yield fork(writeSocket, socket); 
 
@@ -290,9 +330,9 @@ function* listenData() {
 
 
 
-
 export function* productSaga() {
-  yield fork(listenData);
+  yield fork(listenAuction);
+  yield fork(listenFinish);
   
 
 

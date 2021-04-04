@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { Breadcrumb, Header, Image, Loader } from "semantic-ui-react";
 import Carousel, { Dots } from '@brainhubeu/react-carousel';
-import '@brainhubeu/react-carousel/lib/style.css'; import { useState } from 'react';
+import '@brainhubeu/react-carousel/lib/style.css'; 
+import { useState } from 'react';
 
 
 interface Props {

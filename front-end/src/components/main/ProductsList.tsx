@@ -15,26 +15,6 @@ const ProductsList: React.FC<Props> = ({
 }) => {
 
 
-
-
-  const getCategories: any = (category: any) => {
-      
-      return (
-        <>
-          {category.parent ? (
-            <>
-              {getCategories(category.parent)}
-              <Breadcrumb.Divider />
-            </>
-          ) : (
-            <></>
-          )}
-
-          <Breadcrumb>{category.title}</Breadcrumb>
-        </>
-      );
-  }
-
   return (
     <>
       <Header as="h3">상품목록</Header>
@@ -63,7 +43,7 @@ const ProductsList: React.FC<Props> = ({
                 <Item.Header>
                   <Link to={`/products/${product.id}`}>{product.title}</Link>
                 </Item.Header>
-               
+
                 <Item.Meta>
                   <span className="stay">
                     {product.startDateTime} ~ {product.endDateTime}
@@ -89,10 +69,13 @@ const ProductsList: React.FC<Props> = ({
                 </Item.Extra>
 
                 <Item.Extra>
-                  <Label color={product.price ? "blue": undefined} >
+                  <Label color={product.price ? "blue" : undefined}>
                     <Icon name="won sign" />
-                    {product.price && numeral(product.price).format("0,0")} 
-                    {!product.price && `${numeral(product.startPrice).format("0,0")} 시작가 참여가능`} 
+                    {product.price && numeral(product.price).format("0,0")}
+                    {!product.price &&
+                      `${numeral(product.startPrice).format(
+                        "0,0"
+                      )} 시작가 참여가능`}
 
                     {/* 아직 시작안함 */}
                   </Label>
@@ -107,26 +90,31 @@ const ProductsList: React.FC<Props> = ({
                   <Label>
                     <Icon name="eye" /> {product.viewCount}
                   </Label>
-                  <Countdown
-                    date={new Date(product.endDateTime)}
-                    renderer={({
-                      days,
-                      hours,
-                      minutes,
-                      seconds,
-                      completed,
-                    }) => {
-                      return (
-                        <Label color={days === 0 ? "pink" : "blue"}>
-                          <Icon name="hourglass end" />
-                          {days > 0 && days + "일"}
-                          {hours > 0 && hours + "시간"}
-                          {minutes > 0 && minutes + "분"}
-                          {seconds}초
-                        </Label>
-                      );
-                    }}
-                  />
+
+                  {product.isFinish ? (
+                    <Label>종료</Label>
+                  ) : (
+                    <Countdown
+                      date={new Date(product.endDateTime)}
+                      renderer={({
+                        days,
+                        hours,
+                        minutes,
+                        seconds,
+                        completed,
+                      }) => {
+                        return (
+                          <Label color={days === 0 ? "pink" : "blue"}>
+                            <Icon name="hourglass end" />
+                            {days > 0 && days + "일"}
+                            {hours > 0 && hours + "시간"}
+                            {minutes > 0 && minutes + "분"}
+                            {seconds}초
+                          </Label>
+                        );
+                      }}
+                    />
+                  )}
                 </Item.Extra>
               </Item.Content>
             </Item>

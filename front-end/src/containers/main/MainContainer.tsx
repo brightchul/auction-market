@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { createRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Grid } from "semantic-ui-react";
+import { Grid, Ref, Sticky } from "semantic-ui-react";
 import CategoriesList from "../../components/main/CategoriesList";
 import ProductsList from "../../components/main/ProductsList";
 import { RootState } from "../../modules";
@@ -16,6 +16,8 @@ const MainContainer: React.FC<Props> = ({ match }) => {
 
   const { id }: { id?: string } = match.params;
   const dispatch = useDispatch();
+  const contextRef = createRef<HTMLElement>();
+
   const {
     // loading,
     categories,
@@ -58,11 +60,20 @@ const MainContainer: React.FC<Props> = ({ match }) => {
   return (
     <Grid stackable>
       <Grid.Row>
+      <Ref innerRef={contextRef}>
         <Grid.Column width={4}>
-          <CategoriesList categories={categories} />
+          
+            <Sticky context={contextRef}>
+              <CategoriesList categories={categories} />
+            </Sticky>
+          
         </Grid.Column>
+        </Ref>
         <Grid.Column width={12}>
-          <ProductsList products={products} handleToggleLike={handleToggleLike} />
+          <ProductsList
+            products={products}
+            handleToggleLike={handleToggleLike}
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>

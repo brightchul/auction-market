@@ -30,6 +30,7 @@ public class ProductsListResponseDto {
     private Boolean isLike;
     private Integer viewCount;
     private Long price;
+    private Boolean isFinish;
 
     private List<CategoriesTitleResponseDto> categories = new ArrayList<CategoriesTitleResponseDto>();
 
@@ -51,7 +52,7 @@ public class ProductsListResponseDto {
 
         this.viewCount = entity.getViewCount();
 //        this.categories = new CategoriesResponseDto(entity.getCategories());
-
+        this.isFinish = entity.getIsFinish();
         // 가장 하위
         Categories temp = entity.getCategories();
         while(temp != null){

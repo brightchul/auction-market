@@ -2,10 +2,8 @@ package io.youngwon.app.web;
 
 
 import io.youngwon.app.service.ProductsService;
-import io.youngwon.app.web.dto.products.ProductsResponseDto;
-import io.youngwon.app.web.dto.products.ProductsListResponseDto;
-import io.youngwon.app.web.dto.products.ProductsSaveRequestDto;
-import io.youngwon.app.web.dto.products.ProductsUpdateRequestDto;
+import io.youngwon.app.utils.paging.PageRequest;
+import io.youngwon.app.web.dto.products.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +23,11 @@ public class ProductsApiController {
     private final ProductsService productsService;
 
     @GetMapping
-    public ApiResult<List<ProductsListResponseDto>> findAll() {
-        return success(productsService.findAll());
+    public ApiResult<List<ProductsListResponseDto>> findAll(
+            @RequestParam(name = "type") final ProductsSearchType type,
+            @RequestParam(name = "value", required = false) final String value,
+            final PageRequest pageable) {
+        return success(productsService.findAll(pageable.of()));
     }
 
     // 페이징 지원 필요

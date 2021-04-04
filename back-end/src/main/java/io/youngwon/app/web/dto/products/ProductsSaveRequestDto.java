@@ -41,13 +41,16 @@ public class ProductsSaveRequestDto {
     @NotNull(message = "categories must be provided")
     private Long categories;
 
-//    @Builder
-//    public ProductsSaveRequestDto(String title, String content, Long startPrice, Long categories) {
-//        this.title = title;
-//        this.content = content;
-//        this.startPrice = startPrice;
-//        this.categories = categories;
-//    }
+    @Builder
+    public ProductsSaveRequestDto(String title, Long categories, String content, Long startPrice, String startDateTime, String endDateTime) {
+        this.title = title;
+        this.content = content;
+        this.startPrice = startPrice;
+        this.categories = categories;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.categories = categories;
+    }
 
     public Products toEntity() {
         return new Products(this);

@@ -11,11 +11,14 @@ import io.youngwon.app.web.dto.auctions.AuctionsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static io.youngwon.app.utils.ApiUtils.ApiResult;
@@ -36,6 +39,11 @@ public class AuctionsApiController {
     public ApiResult<List<AuctionsListResponseDto>> enter(@PathVariable Long id,
                                                 @RequestBody AuctionsEnterRequestDto requestDto) {
 
+
+        // 시간 채
+        // isFinish Check
+
+
         List<AuctionsListResponseDto> result = auctionsService.enter(id, requestDto, Constant.USER_ID);
         // 새로운 경매요소 반환
 
@@ -49,6 +57,7 @@ public class AuctionsApiController {
     @PatchMapping("{productId}/auctions/{id}/cancel")
     public ApiResult<List<AuctionsListResponseDto>> cancel(@PathVariable Long productId,
                             @PathVariable Long id) {
+
 
         auctionsService.cancel(productId, id);
         return null;

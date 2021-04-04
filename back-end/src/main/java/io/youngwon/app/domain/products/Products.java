@@ -53,6 +53,9 @@ public class Products extends BaseTimeEntity {
 
     private LocalDateTime endDateTime;
 
+    @ColumnDefault("false")
+    private Boolean isFinish;
+
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Files> files = new ArrayList<Files>();
 
@@ -111,6 +114,10 @@ public class Products extends BaseTimeEntity {
 
     public void deleteComents(Long id){
 
+    }
+
+    public void toFinish(){
+        this.isFinish = true;
     }
 
     public Integer like(Likes likes) {

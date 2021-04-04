@@ -10,9 +10,12 @@ import io.youngwon.app.web.dto.products.ProductsListResponseDto;
 import io.youngwon.app.web.dto.products.ProductsSaveRequestDto;
 import io.youngwon.app.web.dto.products.ProductsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +35,7 @@ public class ProductsService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProductsListResponseDto> findAll() {
+    public List<ProductsListResponseDto> findAll(Pageable pageable) {
         return productsRepository
                 .findAll()
                 .stream()
@@ -50,6 +53,13 @@ public class ProductsService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<ProductsListResponseDto> findByNeedToFinish(){
+        return productsRepository.findByEndDateTimeLessThanAndIsFinishIs(LocalDateTime.now(), false)
+                .stream()
+                .map(ProductsListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public Long save(Long userId, ProductsSaveRequestDto requestDto) {
@@ -71,6 +81,16 @@ public class ProductsService {
                 requestDto.getStartPrice()
         );
 
+        return id;
+    }
+
+    @Transactional
+    public Long toFinish(Long id){
+        Products products = productsRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
+
+        products.toFinish();
         return id;
     }
 

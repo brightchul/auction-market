@@ -1,9 +1,6 @@
 ## 설명
 개인적으로 진행한 사이드 프로젝트입니다. 백엔드와 프론트엔드를 모두 포함하지만 배포목적의 서비스가 아니다 보니 제가 백엔드 개발자인 만큼 UI보다는 기능적관점 위주의 개발을 진행하였습니다. 백엔드의 테스트코드, API 문서화에 중점을 두고 개발을 진행하였습니다. 
 
-[github](https://github.com/youngwonseo/auction-market){: target="_blank"}
-
-
 
 <details>
 <summary>기술스택</summary>
@@ -72,33 +69,15 @@
 
 
 
-<details>
-<summary>시스템 구성도</summary>
-<div markdown="1">
+## 시스템구성
 ![](./docs/system.png)
-</div>
-</details>
 
 
 
 
-<details>
-<summary>데이터베이스 설계</summary>
-<div markdown="1">
-
-</div>
-</details>
+## 데이터베이스
 
 
-
-
-
-
-
-
-
-
-## 상세개발
 
 
 

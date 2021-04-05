@@ -1,25 +1,24 @@
 package io.youngwon.app.config.schedule;
 
-import io.youngwon.app.domain.products.Products;
-import io.youngwon.app.domain.products.ProductsRepository;
-import io.youngwon.app.service.ProductsService;
-import io.youngwon.app.web.dto.products.ProductsListResponseDto;
+import io.youngwon.app.domain.products.dao.ProductsRepository;
+import io.youngwon.app.domain.products.service.ProductsService;
+import io.youngwon.app.domain.products.dto.ProductsListAuctionResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class AuctionFinishScheduler {
 
     public final ProductsService productsService;
-
 
     public final ProductsRepository productsRepository;
 
@@ -34,8 +33,9 @@ public class AuctionFinishScheduler {
 //        productsService
         // product
 
+
         //findByIsNotFinish
-        List<ProductsListResponseDto> products = productsService.findByNeedToFinish();
+        List<ProductsListAuctionResponseDto> products = productsService.findByNeedToFinish();
 
         // 전부
         for (int i = 0; i < products.size(); i++) {
@@ -45,10 +45,9 @@ public class AuctionFinishScheduler {
 
         messagingTemplate.convertAndSend("/topic/finish", products);
 
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         Date now = new Date();
         String strDate = sdf.format(now);
-        System.out.println("Java cron job expression:: " + strDate);
+        log.info("Java cron job expression:: " + strDate);
     }
 }

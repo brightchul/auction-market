@@ -22,7 +22,8 @@ const App: React.FC = () => {
     <AppWrapper>
       <Switch>
         <Route exact path="/intro" component={IndexPage} />
-        <Route path="/login" component={LoginPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route path="/login/:vendor" component={LoginPage} />
         <Route exact path="/" component={MainPage} />
         <Route exact path="/category/:id" component={MainPage} />
         <Route

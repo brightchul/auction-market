@@ -1,10 +1,9 @@
 package io.youngwon.app.config.auth.dto;
 
-import io.youngwon.app.domain.users.Role;
-import io.youngwon.app.domain.users.Users;
+import io.youngwon.app.domain.users.domain.Role;
+import io.youngwon.app.domain.users.domain.User;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 
@@ -62,8 +61,8 @@ public class OAuthAttributes {
     }
 
 
-    public Users toEntity() {
-        return Users.builder()
+    public User toEntity() {
+        return User.builder()
                 .name(name)
                 .email(email)
                 .role(Role.GUEST)

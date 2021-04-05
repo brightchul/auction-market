@@ -1,8 +1,8 @@
 package io.youngwon.app.domain.files;
 
 import io.youngwon.app.domain.BaseTimeEntity;
-import io.youngwon.app.domain.products.Products;
-import io.youngwon.app.web.dto.products.ProductsSaveRequestDto;
+import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.dto.ProductsSaveRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.UUID;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Getter

@@ -12,9 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static io.youngwon.app.utils.ApiUtils.ApiResult;
 import static io.youngwon.app.utils.ApiUtils.success;
@@ -62,6 +60,12 @@ public class AuthApiController {
 
         log.info("login end");
         return success(new LoginResponseDto(token, user));
+    }
+
+
+    @GetMapping(path = "me")
+    public ApiResult<Boolean> me(){
+        return null;
     }
 
 

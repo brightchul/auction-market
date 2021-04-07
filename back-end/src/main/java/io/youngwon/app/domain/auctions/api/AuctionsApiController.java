@@ -6,8 +6,10 @@ import io.youngwon.app.config.auth.dto.SessionUser;
 import io.youngwon.app.domain.auctions.service.AuctionsService;
 import io.youngwon.app.domain.auctions.dto.AuctionsEnterRequestDto;
 import io.youngwon.app.domain.auctions.dto.AuctionsListResponseDto;
+import io.youngwon.app.security.JwtAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,14 +32,14 @@ public class AuctionsApiController {
     public ApiResult<List<AuctionsListResponseDto>> enter(
             @PathVariable Long id,
             @RequestBody AuctionsEnterRequestDto requestDto,
-            @LoginUser SessionUser user) {
+            @AuthenticationPrincipal JwtAuthentication authentication) {
 
 
         // 시간 채
         // isFinish Check
 
 
-        List<AuctionsListResponseDto> result = auctionsService.enter(id, requestDto, user.getId());
+        List<AuctionsListResponseDto> result = auctionsService.enter(id, requestDto, authentication.id);
         // 새로운 경매요소 반환
 
 

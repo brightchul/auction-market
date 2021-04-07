@@ -4,9 +4,9 @@ import org.springframework.data.domain.Sort;
 
 public final class PageRequest {
 
-    private int page;
-    private int size;
-    private Sort.Direction direction;
+    private int page = 1;
+    private int size = 10;
+    private Sort.Direction direction = Sort.Direction.ASC;
 
     public void setPage(int page){
         this.page = page <= 0 ? 1 : page;

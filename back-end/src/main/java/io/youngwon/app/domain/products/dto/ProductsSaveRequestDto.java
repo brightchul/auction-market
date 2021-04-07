@@ -1,10 +1,7 @@
 package io.youngwon.app.domain.products.dto;
 
 import io.youngwon.app.domain.products.domain.Products;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -33,8 +30,11 @@ public class ProductsSaveRequestDto {
     @NotNull(message = "categories must be provided")
     private Long categories;
 
+    @Setter
+    private Long seller;
+
     @Builder
-    public ProductsSaveRequestDto(String title, Long categories, String content, Long startPrice, String startDateTime, String endDateTime) {
+    public ProductsSaveRequestDto(String title, Long categories, String content, Long startPrice, String startDateTime, String endDateTime, Long seller) {
         this.title = title;
         this.content = content;
         this.startPrice = startPrice;
@@ -42,6 +42,7 @@ public class ProductsSaveRequestDto {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.categories = categories;
+        this.seller = seller;
     }
 
     public Products toEntity() {

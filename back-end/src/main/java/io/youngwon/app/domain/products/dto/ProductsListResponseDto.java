@@ -5,6 +5,7 @@ import io.youngwon.app.domain.categories.domain.Categories;
 import io.youngwon.app.domain.products.domain.Products;
 import io.youngwon.app.domain.categories.dto.CategoriesTitleResponseDto;
 import io.youngwon.app.domain.files.dto.FilesListResponseDto;
+import io.youngwon.app.domain.users.dto.UserResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,7 +33,7 @@ public class ProductsListResponseDto {
 
     private List<CategoriesTitleResponseDto> categories = new ArrayList<CategoriesTitleResponseDto>();
 
-
+    private UserResponseDto seller;
     // 경매 진행중 여부
 
     // 경매 진행중일시 경과 시간
@@ -62,6 +63,7 @@ public class ProductsListResponseDto {
             this.price = entity.getAuctions().get(0).getPrice();
         }
 
+        this.seller = new UserResponseDto(entity.getSeller());
 
         this.images = entity.getFiles()
                 .stream()

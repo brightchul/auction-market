@@ -31,11 +31,17 @@ public class ProductsService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProductsListResponseDto> findAll(Pageable pageable, Long userId) {
+    public List<ProductsListResponseDto> findAll(
+            final ProductsStateType type,
+            final String value,
+            final Pageable pageable,
+            final Long userId) {
+
+
         return productsRepository
                 .findAll()
                 .stream()
-                .map(d->new ProductsListResponseDto(d, userId))
+                .map(d -> new ProductsListResponseDto(d, userId))
                 .collect(Collectors.toList());
     }
 
@@ -45,12 +51,12 @@ public class ProductsService {
         return productsRepository
                 .findByCategories(new Categories(id))
                 .stream()
-                .map(d->new ProductsListResponseDto(d, userId))
+                .map(d -> new ProductsListResponseDto(d, userId))
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<ProductsListAuctionResponseDto> findByNeedToFinish(){
+    public List<ProductsListAuctionResponseDto> findByNeedToFinish() {
         return productsRepository.findByEndDateTimeLessThanAndIsFinishIs(LocalDateTime.now(), false)
                 .stream()
                 .map(ProductsListAuctionResponseDto::new)
@@ -58,8 +64,7 @@ public class ProductsService {
     }
 
     @Transactional
-    public Long save(Long userId, ProductsSaveRequestDto requestDto) {
-//        requestDto.saveImages();
+    public Long save(ProductsSaveRequestDto requestDto) {
         return productsRepository
                 .save(requestDto.toEntity())
                 .getId();
@@ -81,7 +86,7 @@ public class ProductsService {
     }
 
     @Transactional
-    public Long toFinish(Long id){
+    public Long toFinish(Long id) {
         Products products = productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));

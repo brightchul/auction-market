@@ -24,27 +24,5 @@ public class UsersApiController {
 
     private final UsersService usersService;
 
-    @GetMapping(path = "me")
-    public ApiResult<UserResponseDto> me(
-            @AuthenticationPrincipal JwtAuthentication authentication) {
-        return success(usersService.findById(authentication.id));
-    }
-
-
-    @PostMapping
-    public ApiResult<Long> update(@RequestBody UserSaveRequestDto requestDto){
-        return success(usersService.save(requestDto));
-    }
-
-    @PutMapping(path = "me")
-    public ApiResult<UserResponseDto> update(){
-        return null;
-    }
-
-
-    @DeleteMapping(path = "me")
-    public ApiResult<Boolean> delete(){
-        return null;
-    }
 
 }

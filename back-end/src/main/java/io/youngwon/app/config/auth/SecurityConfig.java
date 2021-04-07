@@ -30,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final EntryPointUnauthorizedHandler unauthorizedHandler;
 
 
-
     @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter(jwtTokenConfigure.getHeader(), jwt);
@@ -52,11 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable()
             .headers().frameOptions().disable()
-
             .and()
             .authorizeRequests()
             .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()
-            .antMatchers("/api/**").permitAll()//.anyRequest()
+            .antMatchers("/api/auth/login").permitAll()
+            .antMatchers("/api/**").authenticated()
             .and()
             .exceptionHandling()
 //                .accessDeniedHandler(accessDeniedHandler)

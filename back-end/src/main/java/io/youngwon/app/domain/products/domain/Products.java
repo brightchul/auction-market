@@ -52,7 +52,7 @@ public class Products extends BaseTimeEntity {
     private LocalDateTime endDateTime;
 
     @ColumnDefault("false")
-    private Boolean isFinish;
+    private Boolean isFinish = false;
 
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Files> files = new ArrayList<Files>();
@@ -77,12 +77,11 @@ public class Products extends BaseTimeEntity {
         this.content = requestDto.getContent();
         this.startPrice = requestDto.getStartPrice();
         this.categories = new Categories(requestDto.getCategories());
-
+        this.seller = new User(requestDto.getSeller());
         // 포맷 체크
 
         this.startDateTime = LocalDateTime.parse(requestDto.getStartDateTime(), Constant.FORMATTER);
         this.endDateTime = LocalDateTime.parse(requestDto.getEndDateTime(), Constant.FORMATTER);
-
 
         if(requestDto.getImages() != null) {
             this.files.addAll(Arrays.stream(requestDto.getImages())

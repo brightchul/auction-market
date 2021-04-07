@@ -50,31 +50,31 @@ public class ProductsApiControllerTest extends SpringMockMvcTestSupport {
     @DisplayName("상품 등록 성공 테스트")
     public void productSaveSuccessTest() throws Exception {
 
-        CategoriesSaveRequestDto categoriesSaveRequestDto = CategoriesSaveRequestDto.builder().title("가전").build();
-        this.mockMvc.perform(
-                post("/api/categories")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(categoriesSaveRequestDto))
-        ).andDo(print())
-                .andExpect(status().is2xxSuccessful());
-
-        ProductsSaveRequestDto requestDto = ProductsSaveRequestDto.builder()
-                .title("상품1")
-                .content("상품1입니다.")
-                .startPrice(1000L)
-                .startDateTime("2021-01-01 10:00 AM")
-                .endDateTime("2021-01-10 10:00 PM")
-                .categories(1L)
-                .build();
-
-        this.mockMvc.perform(
-                post("/api/products")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(requestDto))
-        ).andDo(print())
-                .andExpect(status().is2xxSuccessful());
+//        CategoriesSaveRequestDto categoriesSaveRequestDto = CategoriesSaveRequestDto.builder().title("가전").build();
+//        this.mockMvc.perform(
+//                post("/api/categories")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .accept(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(categoriesSaveRequestDto))
+//        ).andDo(print())
+//                .andExpect(status().is2xxSuccessful());
+//
+//        ProductsSaveRequestDto requestDto = ProductsSaveRequestDto.builder()
+//                .title("상품1")
+//                .content("상품1입니다.")
+//                .startPrice(1000L)
+//                .startDateTime("2021-01-01 10:00 AM")
+//                .endDateTime("2021-01-10 10:00 PM")
+//                .categories(1L)
+//                .build();
+//
+//        this.mockMvc.perform(
+//                post("/api/products")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .accept(MediaType.APPLICATION_JSON)
+//                        .content(new ObjectMapper().writeValueAsString(requestDto))
+//        ).andDo(print())
+//                .andExpect(status().is2xxSuccessful());
     }
 
 

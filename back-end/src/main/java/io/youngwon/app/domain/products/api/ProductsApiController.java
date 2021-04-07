@@ -4,10 +4,14 @@ package io.youngwon.app.domain.products.api;
 import io.youngwon.app.Constant;
 import io.youngwon.app.config.auth.LoginUser;
 import io.youngwon.app.domain.products.dto.*;
+import io.youngwon.app.domain.products.service.ProductsSearchService;
 import io.youngwon.app.domain.users.domain.User;
 import io.youngwon.app.domain.products.service.ProductsService;
+import io.youngwon.app.security.JwtAuthentication;
 import io.youngwon.app.utils.paging.PageRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,12 +29,25 @@ public class ProductsApiController {
 
     private final ProductsService productsService;
 
+    private final ProductsSearchService productsSearchService;
+
     @GetMapping
-    public ApiResult<List<ProductsListResponseDto>> findAll(
-            @RequestParam(name = "type") final ProductsSearchType type,
-            @RequestParam(name = "value", required = false) final String value,
-            final PageRequest pageable) {
-        return success(productsService.findAll(pageable.of(), Constant.USER_ID));
+    public ApiResult<Page<ProductsListResponseDto>> findAll(
+            @RequestParam(name="type", defaultValue = "ALL", required = false) ProductsStateType type,
+            @RequestParam(name="own", required= false) Boolean own,
+            @RequestParam(name="title", required = false) String title,
+            @RequestParam(name="content", required = false) String content,
+            final PageRequest pageable,
+            @AuthenticationPrincipal JwtAuthentication authentication) {
+
+        return success(productsSearchService.findAll(
+                null,
+                title,
+                content,
+                type,
+                own,
+                authentication.id,
+                pageable.of()));
     }
 
 
@@ -49,6 +66,7 @@ public class ProductsApiController {
         return success(productsService.findById(id, user.getId()));
     }
 
+
     /**
      * 상품 등록
      * @param requestDto
@@ -57,18 +75,128 @@ public class ProductsApiController {
     @PostMapping
     public ApiResult<ProductsResponseDto> save(
             @Valid @RequestBody ProductsSaveRequestDto requestDto,
-            @LoginUser User user) {
-        Long id = productsService.save(1L, requestDto);
-        return success(productsService.findById(id, user.getId()));
+            @AuthenticationPrincipal JwtAuthentication authentication) {
+
+        requestDto.setSeller(authentication.id);
+        Long id = productsService.save(requestDto);
+
+        return success(productsService.findById(id, authentication.id));
     }
+
+
+    @PostMapping("dummy")
+    public ApiResult<Boolean> saveDummy(
+            @AuthenticationPrincipal JwtAuthentication authentication) {
+
+        //판매완료
+        for(int i=0;i<20;i++){
+            ProductsSaveRequestDto requestDto = ProductsSaveRequestDto.builder()
+                    .categories(1L)
+                    .title("완료"  +i)
+                    .content("상품입니다.  " + i)
+                    .startPrice(1000L)
+                    .startDateTime("2021-03-01 09:01 PM")
+                    .endDateTime("2021-03-10 09:01 PM")
+                    .seller(authentication.id)
+                    .build();
+            productsService.save(requestDto);
+        }
+
+
+        // 판매중
+        for(int i=0;i<20;i++){
+            ProductsSaveRequestDto requestDto = ProductsSaveRequestDto.builder()
+                    .categories(1L)
+                    .title("판매중"  +i)
+                    .content("상품입니다.  " + i)
+                    .startPrice(1000L)
+                    .startDateTime("2021-04-01 09:01 PM")
+                    .endDateTime("2021-05-01 09:01 PM")
+                    .seller(authentication.id)
+
+                    .build();
+            productsService.save(requestDto);
+        }
+
+
+        // 대기중
+        for(int i=0;i<20;i++){
+            ProductsSaveRequestDto requestDto = ProductsSaveRequestDto.builder()
+                    .categories(1L)
+                    .title("대기중"  +i)
+                    .content("상품입니다.  " + i)
+                    .startPrice(1000L)
+                    .startDateTime("2021-04-26 09:01 PM")
+                    .endDateTime("2021-05-01 09:01 PM")
+                    .seller(authentication.id)
+
+                    .build();
+            productsService.save(requestDto);
+        }
+
+
+        //판매완료
+        for(int i=0;i<20;i++){
+            ProductsSaveRequestDto requestDto = ProductsSaveRequestDto.builder()
+                    .categories(1L)
+                    .title("완료"  +i)
+                    .content("상품입니다.  " + i)
+                    .startPrice(1000L)
+                    .startDateTime("2021-03-01 09:01 PM")
+                    .endDateTime("2021-03-10 09:01 PM")
+                    .seller(3l)
+                    .build();
+            productsService.save(requestDto);
+        }
+
+
+        // 판매중
+        for(int i=0;i<20;i++){
+            ProductsSaveRequestDto requestDto = ProductsSaveRequestDto.builder()
+                    .categories(1L)
+                    .title("판매중"  +i)
+                    .content("상품입니다.  " + i)
+                    .startPrice(1000L)
+                    .startDateTime("2021-04-01 09:01 PM")
+                    .endDateTime("2021-05-01 09:01 PM")
+                    .seller(3l)
+                    .build();
+            productsService.save(requestDto);
+        }
+
+
+        // 대기중
+        for(int i=0;i<20;i++){
+            ProductsSaveRequestDto requestDto = ProductsSaveRequestDto.builder()
+                    .categories(1L)
+                    .title("대기중"  +i)
+                    .content("상품입니다.  " + i)
+                    .startPrice(1000L)
+                    .startDateTime("2021-04-26 09:01 PM")
+                    .endDateTime("2021-05-01 09:01 PM")
+                    .seller(3l)
+
+                    .build();
+            productsService.save(requestDto);
+        }
+
+        return success(true);
+    }
+
+
+
+
+
+
 
     @PutMapping("{id}")
     public ApiResult<ProductsResponseDto> update(
             @PathVariable Long id,
             @RequestBody ProductsUpdateRequestDto requestDto,
-            @LoginUser User user) {
+            @AuthenticationPrincipal JwtAuthentication authentication) {
+
         productsService.update(id, requestDto);
-        return success(productsService.findById(id, user.getId()));
+        return success(productsService.findById(id, authentication.id));
     }
 
     @DeleteMapping("{id}")

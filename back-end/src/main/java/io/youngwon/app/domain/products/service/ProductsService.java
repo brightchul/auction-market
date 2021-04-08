@@ -55,13 +55,13 @@ public class ProductsService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public List<ProductsListAuctionResponseDto> findByNeedToFinish() {
-        return productsRepository.findByEndDateTimeLessThanAndIsFinishIs(LocalDateTime.now(), false)
-                .stream()
-                .map(ProductsListAuctionResponseDto::new)
-                .collect(Collectors.toList());
-    }
+//    @Transactional(readOnly = true)
+//    public List<ProductsListAuctionResponseDto> findByNeedToFinish() {
+//        return productsRepository.findByEndDateTimeLessThanAndIsFinishIs(LocalDateTime.now(), false)
+//                .stream()
+//                .map(ProductsListAuctionResponseDto::new)
+//                .collect(Collectors.toList());
+//    }
 
     @Transactional
     public Long save(ProductsSaveRequestDto requestDto) {
@@ -85,15 +85,17 @@ public class ProductsService {
         return id;
     }
 
-    @Transactional
-    public Long toFinish(Long id) {
-        Products products = productsRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
-        products.toFinish();
-        return id;
-    }
+
+
+//    @Transactional
+//    public Long toFinish(Long id) {
+//        Products products = productsRepository
+//                .findById(id)
+//                .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
+//        products.finish();
+//        return id;
+//    }
 
     @Transactional
     public Long delete(Long id) {

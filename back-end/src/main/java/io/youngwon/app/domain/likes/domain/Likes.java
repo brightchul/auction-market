@@ -11,7 +11,13 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
-@Table(indexes = @Index(name="i_likes", columnList="users, products"))
+@Table(
+        indexes = @Index(name="i_likes", columnList="users, products"),
+        uniqueConstraints={
+            @UniqueConstraint(
+                    columnNames={"products", "users"}
+            )
+        })
 @Entity
 public class Likes extends BaseTimeEntity {
 
@@ -27,13 +33,10 @@ public class Likes extends BaseTimeEntity {
     @JoinColumn(name="users")
     private User users;
 
-
-
     public Likes(Products products, User users){
         this.products = products;
         this.users = users;
     }
-
 
     @Override
     public String toString() {

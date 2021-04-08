@@ -13,6 +13,6 @@ public interface ProductsRepository extends JpaRepository<Products, Long> , Prod
 
     public List<Products> findByCategories(Categories categories);
 
-    public List<Products> findByEndDateTimeLessThanAndIsFinishIs(LocalDateTime endDateTime, Boolean isFinish);
+//    public List<Products> findByEndDateTimeLessThanAndIsFinishIs(LocalDateTime endDateTime, Boolean isFinish);
 
 }

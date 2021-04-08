@@ -1,8 +1,7 @@
 package io.youngwon.app.domain.products.api;
 
 
-import io.youngwon.app.Constant;
-import io.youngwon.app.config.auth.LoginUser;
+import io.youngwon.app.domain.products.domain.State;
 import io.youngwon.app.domain.products.dto.*;
 import io.youngwon.app.domain.products.service.ProductsSearchService;
 import io.youngwon.app.domain.users.domain.User;
@@ -35,10 +34,14 @@ public class ProductsApiController {
     public ApiResult<Page<ProductsListResponseDto>> findAll(
             @RequestParam(name="type", defaultValue = "ALL", required = false) ProductsStateType type,
             @RequestParam(name="own", required= false) Boolean own,
+            @RequestParam(name="like", required= false) Boolean like,
+            @RequestParam(name="auction", required= false) Boolean auction,
             @RequestParam(name="title", required = false) String title,
             @RequestParam(name="content", required = false) String content,
             final PageRequest pageable,
             @AuthenticationPrincipal JwtAuthentication authentication) {
+
+
 
         return success(productsSearchService.findAll(
                 null,
@@ -46,6 +49,8 @@ public class ProductsApiController {
                 content,
                 type,
                 own,
+                like,
+                auction,
                 authentication.id,
                 pageable.of()));
     }
@@ -54,16 +59,18 @@ public class ProductsApiController {
 
     // 페이징 지원 필요
     @GetMapping("categories/{id}")
-    public ApiResult<List<ProductsListResponseDto>> findByCategories(@PathVariable Long id, @LoginUser User user) {
-        return success(productsService.findByCategories(id, user.getId()));
+    public ApiResult<List<ProductsListResponseDto>> findByCategories(
+            @PathVariable Long id,
+            @AuthenticationPrincipal JwtAuthentication authentication) {
+        return success(productsService.findByCategories(id, authentication.id));
     }
 
 
     @GetMapping("{id}")
     public ApiResult<ProductsResponseDto> findById(
             @PathVariable Long id,
-            @LoginUser User user) {
-        return success(productsService.findById(id, user.getId()));
+            @AuthenticationPrincipal JwtAuthentication authentication) {
+        return success(productsService.findById(id, authentication.id));
     }
 
 

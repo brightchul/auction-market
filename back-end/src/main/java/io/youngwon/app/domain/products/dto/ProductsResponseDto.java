@@ -7,6 +7,7 @@ import io.youngwon.app.domain.products.domain.Products;
 import io.youngwon.app.domain.auctions.dto.AuctionsListResponseDto;
 import io.youngwon.app.domain.categories.dto.CategoriesTitleResponseDto;
 import io.youngwon.app.domain.files.dto.FilesListResponseDto;
+import io.youngwon.app.domain.products.domain.State;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class ProductsResponseDto {
     private Integer viewCount;
     private List<AuctionsListResponseDto> auctions;
 //    private List<CommentsListResponseDto> comments;
-    private Boolean isFinish;
+    private State state;
 
     private List<FilesListResponseDto> images;
 
@@ -61,7 +62,7 @@ public class ProductsResponseDto {
 
         this.numOfLike = entity.getLikes().size();
         this.viewCount = entity.getViewCount();
-        this.isFinish = entity.getIsFinish();
+        this.state = entity.getState();
 
         // 내가 지금 라이크를 하고 있는가?
         this.isLike = entity.getLikes()

@@ -1,10 +1,10 @@
 package io.youngwon.app.domain.likes.api;
 
 
-import io.youngwon.app.config.auth.LoginUser;
-import io.youngwon.app.config.auth.dto.SessionUser;
 import io.youngwon.app.domain.likes.service.LikesService;
+import io.youngwon.app.security.JwtAuthentication;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +23,13 @@ public class LikesApiController {
 
     @PatchMapping("{id}/like")
     public ApiResult<Integer> like(@PathVariable Long id,
-                                   @LoginUser SessionUser user) {
-        return success(likesService.like(id, user.getId()));
+                                   @AuthenticationPrincipal JwtAuthentication authentication) {
+        return success(likesService.like(id, authentication.id));
     }
 
     @PatchMapping("{id}/unlike")
     public ApiResult<Integer> unlike(@PathVariable Long id,
-                                     @LoginUser SessionUser user) {
-        return success(likesService.unlike(id, user.getId()));
+                                     @AuthenticationPrincipal JwtAuthentication authentication) {
+        return success(likesService.unlike(id, authentication.id));
     }
 }

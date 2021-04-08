@@ -1,12 +1,15 @@
 package io.youngwon.app.domain.products.dao;
 
+import io.youngwon.app.domain.products.domain.Products;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
 public interface ProductsCustomRepository {
 
-//    List<Products> findOnSale(final ProductsSearchType type, final String value, final Pageable pageable);
 
+    public List<Products> findAllForStartCheck(LocalDateTime now);
 
-
-    //    public List<Products> findByEndDateTimeLessThanAndIsFinishIs(LocalDateTime endDateTime, Boolean isFinish);
-
+    public List<Products> findAllForEndCheck(LocalDateTime now);
 
 }

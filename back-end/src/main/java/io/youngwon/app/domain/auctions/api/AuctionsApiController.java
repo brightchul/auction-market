@@ -1,8 +1,6 @@
 package io.youngwon.app.domain.auctions.api;
 
 
-import io.youngwon.app.config.auth.LoginUser;
-import io.youngwon.app.config.auth.dto.SessionUser;
 import io.youngwon.app.domain.auctions.service.AuctionsService;
 import io.youngwon.app.domain.auctions.dto.AuctionsEnterRequestDto;
 import io.youngwon.app.domain.auctions.dto.AuctionsListResponseDto;

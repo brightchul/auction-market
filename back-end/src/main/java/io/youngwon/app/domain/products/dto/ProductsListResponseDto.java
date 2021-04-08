@@ -5,6 +5,7 @@ import io.youngwon.app.domain.categories.domain.Categories;
 import io.youngwon.app.domain.products.domain.Products;
 import io.youngwon.app.domain.categories.dto.CategoriesTitleResponseDto;
 import io.youngwon.app.domain.files.dto.FilesListResponseDto;
+import io.youngwon.app.domain.products.domain.State;
 import io.youngwon.app.domain.users.dto.UserResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,7 @@ public class ProductsListResponseDto {
     private Boolean isLike;
     private Integer viewCount;
     private Long price;
-    private Boolean isFinish;
+    private State state;
 
     private List<CategoriesTitleResponseDto> categories = new ArrayList<CategoriesTitleResponseDto>();
 
@@ -51,7 +52,7 @@ public class ProductsListResponseDto {
 
         this.viewCount = entity.getViewCount();
 //        this.categories = new CategoriesResponseDto(entity.getCategories());
-        this.isFinish = entity.getIsFinish();
+        this.state = entity.getState();
         // 가장 하위
         Categories temp = entity.getCategories();
         while(temp != null){

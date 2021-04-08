@@ -2,7 +2,7 @@ package io.youngwon.app.domain.products.dto;
 
 public enum ProductsStateType {
     ALL,
-    WAITTING,
+    WAITING,
     SELLING,
     FINISH
 }

@@ -51,8 +51,8 @@ public class Products extends BaseTimeEntity {
 
     private LocalDateTime endDateTime;
 
-    @ColumnDefault("false")
-    private Boolean isFinish = false;
+    @Enumerated(EnumType.STRING)
+    private State state = State.WAITING;
 
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Files> files = new ArrayList<Files>();
@@ -70,6 +70,9 @@ public class Products extends BaseTimeEntity {
     private List<Likes> likes = new ArrayList<Likes>();
 
 
+    public Products(Long id){
+        this.id = id;
+    }
 
 
     public Products(ProductsSaveRequestDto requestDto) {
@@ -78,7 +81,9 @@ public class Products extends BaseTimeEntity {
         this.startPrice = requestDto.getStartPrice();
         this.categories = new Categories(requestDto.getCategories());
         this.seller = new User(requestDto.getSeller());
-        // 포맷 체크
+
+        // 초기등록시 무조건 대기
+        this.state = State.WAITING;
 
         this.startDateTime = LocalDateTime.parse(requestDto.getStartDateTime(), Constant.FORMATTER);
         this.endDateTime = LocalDateTime.parse(requestDto.getEndDateTime(), Constant.FORMATTER);
@@ -113,8 +118,12 @@ public class Products extends BaseTimeEntity {
 
     }
 
-    public void toFinish(){
-        this.isFinish = true;
+    public void onSale(){
+        this.state = State.SELLING;
+    }
+
+    public void finish(){
+        this.state = State.FINISH;
     }
 
     public Integer like(Likes likes) {

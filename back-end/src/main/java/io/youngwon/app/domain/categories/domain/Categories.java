@@ -2,7 +2,7 @@ package io.youngwon.app.domain.categories.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.youngwon.app.domain.BaseTimeEntity;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,8 @@ public class Categories extends BaseTimeEntity {
     private Categories parent;
 
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Products> products = new ArrayList<Products>();
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categories")
+//    private List<Product> products = new ArrayList<Product>();
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")

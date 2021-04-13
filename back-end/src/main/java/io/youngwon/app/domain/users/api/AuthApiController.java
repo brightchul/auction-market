@@ -30,11 +30,10 @@ public class AuthApiController {
 
     @PostMapping("/api/auth/login")
     public ApiResult<LoginResponseDto> loginWithKakao(@RequestBody LoginRequestDto requestDto) {
-        // 엑세스 토큰을 받고 JWT를 반환
 
-        log.info("login start");
+
+        // 엑세스 토큰을 받고 JWT를 반환
         String accessToken = new KakaoWebClient.GetAccessToken(requestDto.getCode()).get();
-        log.info("accessToken : " + accessToken);
 
         // 벤더에서 조회한 로그인 정보
         User login = new KakaoWebClient.GetUserInfo(accessToken).get();

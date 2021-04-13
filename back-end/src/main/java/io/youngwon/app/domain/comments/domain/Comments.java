@@ -1,7 +1,7 @@
 package io.youngwon.app.domain.comments.domain;
 
 import io.youngwon.app.domain.BaseTimeEntity;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.users.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +20,13 @@ public class Comments extends BaseTimeEntity {
     private String content;
 
     @ManyToOne
-    private Products products;
+    private Product products;
 
     @ManyToOne
     private User writer;
 
 
-    public Comments(String content, Products products) {
+    public Comments(String content, Product products) {
         this.content = content;
         this.products = products;
     }

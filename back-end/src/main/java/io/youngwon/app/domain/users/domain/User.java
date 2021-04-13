@@ -10,8 +10,8 @@ import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @Entity
+@Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User extends BaseTimeEntity {
 
     @Id

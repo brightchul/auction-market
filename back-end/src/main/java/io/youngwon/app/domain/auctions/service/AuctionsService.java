@@ -3,7 +3,7 @@ package io.youngwon.app.domain.auctions.service;
 import io.youngwon.app.config.errors.NotFoundException;
 import io.youngwon.app.domain.auctions.domain.Auctions;
 import io.youngwon.app.domain.auctions.domain.AuctionsRepository;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.products.dao.ProductsRepository;
 import io.youngwon.app.domain.users.domain.User;
 import io.youngwon.app.domain.auctions.dto.AuctionsListResponseDto;
@@ -28,7 +28,7 @@ public class AuctionsService {
 
     @Transactional
     public List<AuctionsListResponseDto> enter(Long id, AuctionsEnterRequestDto requestDto, Long userId){
-        Products products =  productsRepository
+        Product products =  productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
@@ -41,7 +41,7 @@ public class AuctionsService {
 
     @Transactional
     public AuctionsResponseDto cancel(Long id, Long auctionId){
-        Products products =  productsRepository
+        Product products =  productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 

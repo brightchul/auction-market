@@ -1,20 +1,15 @@
 package io.youngwon.app.domain.products.service;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
 import io.youngwon.app.domain.auctions.domain.QAuctions;
 import io.youngwon.app.domain.categories.domain.Categories;
-import io.youngwon.app.domain.categories.domain.QCategories;
-import io.youngwon.app.domain.files.QFiles;
-import io.youngwon.app.domain.likes.domain.Likes;
 import io.youngwon.app.domain.likes.domain.QLikes;
-import io.youngwon.app.domain.products.domain.Products;
-import io.youngwon.app.domain.products.domain.QProducts;
+import io.youngwon.app.domain.products.domain.Product;
+import io.youngwon.app.domain.products.domain.QProduct;
 import io.youngwon.app.domain.products.domain.State;
 import io.youngwon.app.domain.products.dto.ProductsListResponseDto;
 import io.youngwon.app.domain.products.dto.ProductsStateType;
-import io.youngwon.app.domain.users.domain.QUser;
 import io.youngwon.app.domain.users.domain.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -24,7 +19,6 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,10 +27,10 @@ import java.util.stream.Collectors;
 public class ProductsSearchService extends QuerydslRepositorySupport {
 
     public ProductsSearchService() {
-        super(Products.class);
+        super(Product.class);
     }
 
-    final QProducts product = QProducts.products;
+    final QProduct product = QProduct.product;
     final QLikes likes = QLikes.likes;
     final QAuctions auctions = QAuctions.auctions;
 
@@ -45,50 +39,49 @@ public class ProductsSearchService extends QuerydslRepositorySupport {
             final String title,
             final String content,
             final ProductsStateType type,
-            final Boolean own,
-            final Boolean onLike,
-            final Boolean onAuction,
+//            final Boolean own,
+//            final Boolean onLike,
+//            final Boolean onAuction,
             final Long userId,
             final Pageable pageable
     ) {
 
-        JPQLQuery<Products> query = from(product);
+        JPQLQuery<Product> query = from(product);
 
         // 동시검색?
         // 좋아요
-        if(onLike != null && onLike){
+        if (type != null && type == ProductsStateType.LIKE) {
             query = query.innerJoin(product.likes, likes)
                     .on(likes.users.id.eq(userId));
         }
 
         // 경매참여
-        if(onAuction != null && onAuction){
+        if (type != null && type == ProductsStateType.AUCTION) {
             query = query.innerJoin(product.auctions, auctions)
                     .on(auctions.participants.id.eq(userId));
         }
 
 
-
         query = query.where(
-                            eqCategories(categories),
-                            likeTitle(title),
-                            eqState(type),
-                            onlyOwn(own, userId)
-                    ).orderBy(
-                            product.state.desc(),
-                            product.id.desc()
-                    );
+                eqCategories(categories),
+                likeTitle(title),
+                eqState(type),
+                onlyOwn(type != null && type == ProductsStateType.OWN ? true : false, userId)
+        ).orderBy(
+                product.state.desc(),
+                product.id.desc()
+        );
 
-        final List<Products> products = getQuerydsl().applyPagination(pageable, query).fetch();
+        final List<Product> products = getQuerydsl().applyPagination(pageable, query).fetch();
         return new PageImpl<>(
-                products.stream().map(d->new ProductsListResponseDto(d, userId)).collect(Collectors.toList()),
+                products.stream().map(d -> new ProductsListResponseDto(d, userId)).collect(Collectors.toList()),
                 pageable,
                 query.fetchCount());
     }
 
 
-    private BooleanExpression eqCategories(Categories categories){
-        if(categories == null){
+    private BooleanExpression eqCategories(Categories categories) {
+        if (categories == null) {
             return null;
         }
         return product.categories.eq(categories);
@@ -102,14 +95,13 @@ public class ProductsSearchService extends QuerydslRepositorySupport {
     }
 
 
+    private BooleanExpression eqState(ProductsStateType type) {
 
-    private BooleanExpression eqState(ProductsStateType type){
-
-        if(type == null || type == ProductsStateType.ALL){
+        if (type == null || type == ProductsStateType.ALL) {
             return null;
         }
 
-        switch(type) {
+        switch (type) {
             case SELLING:
                 return product.state.eq(State.SELLING);
             case WAITING:
@@ -122,17 +114,15 @@ public class ProductsSearchService extends QuerydslRepositorySupport {
     }
 
 
-    private BooleanExpression onlyLike(Boolean onLike, Long userId){
+    private BooleanExpression onlyLike(Boolean onLike, Long userId) {
 
 
-
-
-        if(onLike == null || !onLike){
+        if (onLike == null || !onLike) {
             return null;
         }
 
 //        return product.likes.
-                //contains(new Likes(like.products, new User(userId)));
+        //contains(new Likes(like.products, new User(userId)));
 //        users.eq(new User(userId));
 
 //                .users.eq(new User(userId));
@@ -141,9 +131,8 @@ public class ProductsSearchService extends QuerydslRepositorySupport {
     }
 
 
-
     private BooleanExpression onlyOwn(Boolean own, Long userId) {
-        if(own == null){
+        if (own == null) {
             return null;
         }
         return product.seller.eq(new User(userId));

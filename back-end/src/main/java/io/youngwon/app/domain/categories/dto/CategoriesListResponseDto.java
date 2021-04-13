@@ -19,7 +19,7 @@ public class CategoriesListResponseDto {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.children = entity.getChildren().stream().map(CategoriesListResponseDto::new).collect(Collectors.toList());
-        this.numOfProduct = entity.getProducts().size();
+//        this.numOfProduct = entity.getProducts().size();
     }
 
 }

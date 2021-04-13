@@ -1,7 +1,7 @@
 package io.youngwon.app.domain.likes.domain;
 
 import io.youngwon.app.domain.BaseTimeEntity;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.users.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,13 +27,13 @@ public class Likes extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name="products")
-    private Products products;
+    private Product products;
 
     @ManyToOne
     @JoinColumn(name="users")
     private User users;
 
-    public Likes(Products products, User users){
+    public Likes(Product products, User users){
         this.products = products;
         this.users = users;
     }

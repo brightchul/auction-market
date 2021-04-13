@@ -1,0 +1,19 @@
+= RESTful Notes API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectnums:
+:sectlinks:
+:sectanchors:
+
+[[api]]
+== Book Api
+api 에 관련된 설명을 이곳에 적습니다.
+
+include::{snippets}/product-save/curl-request.adoc[]
+include::{snippets}/product-save/http-request.adoc[]
+include::{snippets}/product-save/path-parameters.adoc[]
+include::{snippets}/product-save/http-response.adoc[]
+include::{snippets}/product-save/response-fields.adoc[]

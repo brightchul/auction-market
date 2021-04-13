@@ -1,7 +1,7 @@
 package io.youngwon.app.domain.files;
 
 import io.youngwon.app.domain.BaseTimeEntity;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.products.dto.ProductsSaveRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,9 +30,9 @@ public class Files extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "products")
-    private Products products;
+    private Product products;
 
-    public Files(Products products, ProductsSaveRequestDto.Images image) {
+    public Files(Product products, ProductsSaveRequestDto.Images image) {
 
         // 파일 업로드
         this.path = "uploads";

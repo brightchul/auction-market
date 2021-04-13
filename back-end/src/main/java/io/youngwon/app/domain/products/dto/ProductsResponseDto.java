@@ -3,7 +3,7 @@ package io.youngwon.app.domain.products.dto;
 
 import io.youngwon.app.Constant;
 import io.youngwon.app.domain.categories.domain.Categories;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.auctions.dto.AuctionsListResponseDto;
 import io.youngwon.app.domain.categories.dto.CategoriesTitleResponseDto;
 import io.youngwon.app.domain.files.dto.FilesListResponseDto;
@@ -46,7 +46,7 @@ public class ProductsResponseDto {
 
 
 
-    public ProductsResponseDto(Products entity, Long userId){
+    public ProductsResponseDto(Product entity, Long userId){
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();

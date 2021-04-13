@@ -6,6 +6,7 @@ import io.youngwon.app.domain.users.domain.UsersRepository;
 import io.youngwon.app.domain.users.dto.UserResponseDto;
 import io.youngwon.app.domain.users.dto.UserSaveRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UsersService implements UserDetailsService {
@@ -59,9 +61,8 @@ public class UsersService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = usersRepository.findByEmail(s).orElseThrow(() -> new NotFoundException("Could not found user for email " + s));
-//        List<User> users = usersRepository.findAll();
-//        User user = users.get(0);
 
+        log.info(user.getEmail() + "," + user.getName());
         return new org.springframework.security.core.userdetails.User(
                 user.getName(),
                 "1",

@@ -4,7 +4,7 @@ package io.youngwon.app.domain.comments.service;
 import io.youngwon.app.config.errors.NotFoundException;
 import io.youngwon.app.domain.comments.domain.Comments;
 import io.youngwon.app.domain.comments.dao.CommentsRepository;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.products.dao.ProductsRepository;
 import io.youngwon.app.domain.comments.dto.CommentsListResponseDto;
 import io.youngwon.app.domain.comments.dto.CommentsSaveRequestDto;
@@ -25,7 +25,7 @@ public class CommentsService {
 
     @Transactional(readOnly = true)
     public List<CommentsListResponseDto> findByProduct(Long id){
-        Products products =  productsRepository
+        Product products =  productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
@@ -36,7 +36,7 @@ public class CommentsService {
 
     @Transactional
     public Long save(Long productId, CommentsSaveRequestDto requestDto){
-        Products products =  productsRepository
+        Product products =  productsRepository
                 .findById(productId)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + productId));
 
@@ -46,7 +46,7 @@ public class CommentsService {
 
     @Transactional
     public Long update(Long productId, Long commentsid, CommentsUpdateRequestDto requestDto){
-        Products products =  productsRepository
+        Product products =  productsRepository
                 .findById(productId)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + productId));
 

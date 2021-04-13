@@ -1,6 +1,6 @@
 package io.youngwon.app.domain.products.dao;
 
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -8,8 +8,8 @@ import java.util.List;
 public interface ProductsCustomRepository {
 
 
-    public List<Products> findAllForStartCheck(LocalDateTime now);
+    public List<Product> findAllForStartCheck(LocalDateTime now);
 
-    public List<Products> findAllForEndCheck(LocalDateTime now);
+    public List<Product> findAllForEndCheck(LocalDateTime now);
 
 }

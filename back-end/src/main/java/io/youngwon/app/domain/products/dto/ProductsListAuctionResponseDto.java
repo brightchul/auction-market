@@ -2,7 +2,7 @@ package io.youngwon.app.domain.products.dto;
 
 import io.youngwon.app.Constant;
 import io.youngwon.app.domain.categories.domain.Categories;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.categories.dto.CategoriesTitleResponseDto;
 import io.youngwon.app.domain.files.dto.FilesListResponseDto;
 import io.youngwon.app.domain.products.domain.State;
@@ -33,7 +33,7 @@ public class ProductsListAuctionResponseDto {
 
     private List<CategoriesTitleResponseDto> categories = new ArrayList<CategoriesTitleResponseDto>();
 
-    public ProductsListAuctionResponseDto(Products entity) {
+    public ProductsListAuctionResponseDto(Product entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();

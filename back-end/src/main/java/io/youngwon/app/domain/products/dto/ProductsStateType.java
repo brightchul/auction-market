@@ -4,5 +4,8 @@ public enum ProductsStateType {
     ALL,
     WAITING,
     SELLING,
-    FINISH
+    FINISH,
+    AUCTION,
+    LIKE,
+    OWN;
 }

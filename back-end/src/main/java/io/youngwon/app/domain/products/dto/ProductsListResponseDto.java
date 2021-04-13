@@ -2,7 +2,7 @@ package io.youngwon.app.domain.products.dto;
 
 import io.youngwon.app.Constant;
 import io.youngwon.app.domain.categories.domain.Categories;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.categories.dto.CategoriesTitleResponseDto;
 import io.youngwon.app.domain.files.dto.FilesListResponseDto;
 import io.youngwon.app.domain.products.domain.State;
@@ -32,7 +32,8 @@ public class ProductsListResponseDto {
     private Long price;
     private State state;
 
-    private List<CategoriesTitleResponseDto> categories = new ArrayList<CategoriesTitleResponseDto>();
+
+    private List<CategoriesTitleResponseDto> categories = new ArrayList<>();
 
     private UserResponseDto seller;
     // 경매 진행중 여부
@@ -42,7 +43,7 @@ public class ProductsListResponseDto {
     // 현재 가격
 
 
-    public ProductsListResponseDto(Products entity, Long userId) {
+    public ProductsListResponseDto(Product entity, Long userId) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
@@ -51,7 +52,6 @@ public class ProductsListResponseDto {
         this.endDateTime = entity.getEndDateTime().format(Constant.FORMATTER);
 
         this.viewCount = entity.getViewCount();
-//        this.categories = new CategoriesResponseDto(entity.getCategories());
         this.state = entity.getState();
         // 가장 하위
         Categories temp = entity.getCategories();

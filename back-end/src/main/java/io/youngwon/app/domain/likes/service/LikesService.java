@@ -3,7 +3,7 @@ package io.youngwon.app.domain.likes.service;
 import io.youngwon.app.config.errors.NotFoundException;
 import io.youngwon.app.domain.likes.domain.Likes;
 import io.youngwon.app.domain.likes.dao.LikesRepository;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.products.dao.ProductsRepository;
 import io.youngwon.app.domain.users.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class LikesService {
 
     @Transactional
     public Integer like(Long id, Long userId){
-        Products products = productsRepository
+        Product products = productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
@@ -33,7 +33,7 @@ public class LikesService {
 
     @Transactional
     public Integer unlike(Long id, Long userId){
-        Products products = productsRepository
+        Product products = productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 

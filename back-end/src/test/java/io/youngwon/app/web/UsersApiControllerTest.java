@@ -32,17 +32,16 @@ public class UsersApiControllerTest extends SpringMockMvcTestSupport {
 
     @BeforeTransaction
     public void accountSetup() {
-        User user = usersRepository.save(User.builder()
-                .email("jazz9008@gmail.com")
-                .name("서영원")
-                .build());
+//        User user = usersRepository.save(User.builder()
+//                .email("jazz9008@gmail.com")
+//                .name("서영원")
+//                .build());
     }
 
 
 
     @Test
     @Order(1)
-    @WithUserDetails(value="jazz9008@gmail.com", userDetailsServiceBeanName = "usersService")
     @DisplayName("내정보 조회 성공 테스트")
     public void userSuccessTest() throws Exception {
         // 세션정보를 받아오지 못함
@@ -67,11 +66,11 @@ public class UsersApiControllerTest extends SpringMockMvcTestSupport {
 //                .andExpect(status().is4xxClientError());
     }
 
-
-    @AfterTransaction
-    public void accountRemove() {
-        usersRepository.deleteAll();
-    }
+//
+//    @AfterTransaction
+//    public void accountRemove() {
+//        usersRepository.deleteAll();
+//    }
 
 
 }

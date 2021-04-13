@@ -3,7 +3,7 @@ package io.youngwon.app.domain.products.service;
 
 import io.youngwon.app.config.errors.NotFoundException;
 import io.youngwon.app.domain.categories.domain.Categories;
-import io.youngwon.app.domain.products.domain.Products;
+import io.youngwon.app.domain.products.domain.Product;
 import io.youngwon.app.domain.products.dao.ProductsRepository;
 import io.youngwon.app.domain.products.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class ProductsService {
 
     @Transactional(readOnly = true)
     public ProductsResponseDto findById(Long id, Long userId) {
-        Products products = productsRepository
+        Product products = productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
@@ -55,24 +55,51 @@ public class ProductsService {
                 .collect(Collectors.toList());
     }
 
-//    @Transactional(readOnly = true)
-//    public List<ProductsListAuctionResponseDto> findByNeedToFinish() {
-//        return productsRepository.findByEndDateTimeLessThanAndIsFinishIs(LocalDateTime.now(), false)
-//                .stream()
-//                .map(ProductsListAuctionResponseDto::new)
-//                .collect(Collectors.toList());
-//    }
+    @Transactional(readOnly = true)
+    public List<ProductsListStateResponseDto> findAllForStartCheck(LocalDateTime now) {
+        return productsRepository
+                .findAllForStartCheck(now)
+                .stream()
+                .map(ProductsListStateResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<ProductsListStateResponseDto> findAllForEndCheck(LocalDateTime now) {
+        return productsRepository
+                .findAllForEndCheck(now)
+                .stream()
+                .map(ProductsListStateResponseDto::new)
+                .collect(Collectors.toList());
+    }
 
     @Transactional
-    public Long save(ProductsSaveRequestDto requestDto) {
+    public Long updateState(Long id, ProductsStateType type){
+
+        Product products = productsRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
+
+        if(type == ProductsStateType.SELLING){
+            products.onSale();
+        }else if(type == ProductsStateType.FINISH){
+            products.finish();
+        }
+
+        return id;
+    }
+
+    @Transactional
+    public Long save(ProductsSaveRequestDto requestDto, Long userId) {
         return productsRepository
-                .save(requestDto.toEntity())
+                .save(requestDto.toEntity(userId))
                 .getId();
     }
 
     @Transactional
     public Long update(Long id, ProductsUpdateRequestDto requestDto) {
-        Products products = productsRepository
+        Product products = productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 
@@ -99,7 +126,7 @@ public class ProductsService {
 
     @Transactional
     public Long delete(Long id) {
-        Products products = productsRepository
+        Product products = productsRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Could not found product for " + id));
 

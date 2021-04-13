@@ -9,6 +9,7 @@ import io.youngwon.app.domain.products.service.ProductsService;
 import io.youngwon.app.security.JwtAuthentication;
 import io.youngwon.app.utils.paging.PageRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import java.util.List;
 import static io.youngwon.app.utils.ApiUtils.ApiResult;
 import static io.youngwon.app.utils.ApiUtils.success;
 
-
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/products")
@@ -33,14 +34,18 @@ public class ProductsApiController {
     @GetMapping
     public ApiResult<Page<ProductsListResponseDto>> findAll(
             @RequestParam(name="type", defaultValue = "ALL", required = false) ProductsStateType type,
-            @RequestParam(name="own", required= false) Boolean own,
-            @RequestParam(name="like", required= false) Boolean like,
-            @RequestParam(name="auction", required= false) Boolean auction,
             @RequestParam(name="title", required = false) String title,
             @RequestParam(name="content", required = false) String content,
             final PageRequest pageable,
             @AuthenticationPrincipal JwtAuthentication authentication) {
 
+
+        /*
+        * own
+        * like
+        * auction
+        *
+        */
 
 
         return success(productsSearchService.findAll(
@@ -48,9 +53,6 @@ public class ProductsApiController {
                 title,
                 content,
                 type,
-                own,
-                like,
-                auction,
                 authentication.id,
                 pageable.of()));
     }
@@ -84,9 +86,7 @@ public class ProductsApiController {
             @Valid @RequestBody ProductsSaveRequestDto requestDto,
             @AuthenticationPrincipal JwtAuthentication authentication) {
 
-        requestDto.setSeller(authentication.id);
-        Long id = productsService.save(requestDto);
-
+        Long id = productsService.save(requestDto, authentication.id );
         return success(productsService.findById(id, authentication.id));
     }
 
@@ -104,9 +104,8 @@ public class ProductsApiController {
                     .startPrice(1000L)
                     .startDateTime("2021-03-01 09:01 PM")
                     .endDateTime("2021-03-10 09:01 PM")
-                    .seller(authentication.id)
                     .build();
-            productsService.save(requestDto);
+            productsService.save(requestDto, authentication.id);
         }
 
 
@@ -119,10 +118,9 @@ public class ProductsApiController {
                     .startPrice(1000L)
                     .startDateTime("2021-04-01 09:01 PM")
                     .endDateTime("2021-05-01 09:01 PM")
-                    .seller(authentication.id)
-
                     .build();
-            productsService.save(requestDto);
+
+            productsService.save(requestDto, authentication.id);
         }
 
 
@@ -135,10 +133,9 @@ public class ProductsApiController {
                     .startPrice(1000L)
                     .startDateTime("2021-04-26 09:01 PM")
                     .endDateTime("2021-05-01 09:01 PM")
-                    .seller(authentication.id)
-
                     .build();
-            productsService.save(requestDto);
+
+            productsService.save(requestDto, authentication.id);
         }
 
 
@@ -151,9 +148,9 @@ public class ProductsApiController {
                     .startPrice(1000L)
                     .startDateTime("2021-03-01 09:01 PM")
                     .endDateTime("2021-03-10 09:01 PM")
-                    .seller(3l)
                     .build();
-            productsService.save(requestDto);
+
+            productsService.save(requestDto, 2L);
         }
 
 
@@ -166,9 +163,9 @@ public class ProductsApiController {
                     .startPrice(1000L)
                     .startDateTime("2021-04-01 09:01 PM")
                     .endDateTime("2021-05-01 09:01 PM")
-                    .seller(3l)
                     .build();
-            productsService.save(requestDto);
+
+            productsService.save(requestDto, 2L);
         }
 
 
@@ -181,10 +178,9 @@ public class ProductsApiController {
                     .startPrice(1000L)
                     .startDateTime("2021-04-26 09:01 PM")
                     .endDateTime("2021-05-01 09:01 PM")
-                    .seller(3l)
-
                     .build();
-            productsService.save(requestDto);
+
+            productsService.save(requestDto, 2L);
         }
 
         return success(true);

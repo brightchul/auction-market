@@ -13,9 +13,7 @@
 9. [결과 UI](https://youngwonseo.github.io/%EA%B2%BD%EB%A7%A4-%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%8C%8C%ED%8A%B8-9-%EA%B2%B0%EA%B3%BC-ui)
 10. [마무리](https://youngwonseo.github.io/%EA%B2%BD%EB%A7%A4-%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%8C%8C%ED%8A%B8-10-%EB%A7%88%EB%AC%B4%EB%A6%AC)
 
-<details>
-<summary>기술스택</summary>
-<div markdown="1">
+## 기술스택
 
 * 백엔드
   * Java8
@@ -29,7 +27,6 @@
   * Lombok
   * Querydsl
   * Java JWT
-
 * 프론트엔드
   * Typescript
   * ReactJS
@@ -39,22 +36,14 @@
   * Socket.io
   * Sementic UI
   * Echart
-
 * 데이터베이스
   * MySql
-
 * Etc
   * Docker
   * Nginx
 
-</div>
-</details>
 
-
-<details>
-<summary>기능</summary>
-<div markdown="1">
-
+## 기능
 * 로그인
   * 네이버
   * 카카오
@@ -83,24 +72,22 @@
   * 이미지 등록
     * 썸네일 저장
 
-</div>
-</details>
-
-
-
 ## 시스템구성
 ![](./docs/system.png)
-
-
 
 
 ## 데이터베이스
 ![](./docs/database.png)
 
 
-
 ## UI
+### 로그인
+![](./docs/screenshot-login.png)
 
+### 상품목록
+![](./docs/screenshot-main.png)
+
+### 상품상세화면
 
 
 

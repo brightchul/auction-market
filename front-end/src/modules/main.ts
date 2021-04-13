@@ -22,7 +22,7 @@ import * as likeAPI from "../lib/api/like";
 import * as auctionsAPI from "../lib/api/auctions";
 import { AxiosError } from 'axios';
 
-const INITIALIZE_FORM = "main/INITIALIZE_FORM";
+const INITIALIZE_PRODUCTS = "main/INITIALIZE_PRODUCTS";
 const REFRESH_AUCTION = "main/REFRESH_AUCTION";
 
 // 상품 목록
@@ -30,7 +30,7 @@ const [
   LOAD_PRODUCTS,
   LOAD_PRODUCTS_SUCCESS,
   LOAD_PRODUCTS_FAILURE,
-] = createActionTypes("main/LOAD_PRODUCCTS");
+] = createActionTypes("main/LOAD_PRODUCTS");
 
 export const loadProducts = createAsyncAction(
   LOAD_PRODUCTS,
@@ -76,6 +76,13 @@ export const unLike = createAsyncAction(
   UN_LIKE_FAILURE,
 )<any, any, AxiosError>();
 
+export const initializeProducts = createAction(
+  INITIALIZE_PRODUCTS,
+  ()=>{}
+)();
+
+
+
 
 const loadProductsSaga = createAsyncSaga(LOAD_PRODUCTS, productsAPI.loadProducts);
 const loadCategoriesSaga = createAsyncSaga(LOAD_CATEGORIES, categoriesAPI.loadCategories);
@@ -92,6 +99,7 @@ export function* mainSaga() {
   yield takeLatest(LOAD_CATEGORIES, loadCategoriesSaga);
   yield takeLatest(LIKE, likeSaga);
   yield takeLatest(UN_LIKE, unLikeSaga);
+
 }
 
 interface Products {
@@ -101,23 +109,20 @@ interface Products {
   startPrice: number;
   startDateTime: string;
   endDateTime: string;
-
   auctions: any;
   images: any;
   numOfLike: number;
   isLike: boolean;
-
   numOfAuctions: number;
   numOfParticipant: number;
   price: number;
-
   categories: any;
-
 }
 
 interface CommentsState {
   categories: null,
-  products: Products[] | undefined,
+  products: Products[] | null,
+  pageable: any;
   product: any;
   dashboard: any;
   comments: any;
@@ -131,11 +136,10 @@ interface CommentsState {
 
 const initialState: CommentsState = {
   categories: null,
-  products: undefined,
+  products: null,
+  pageable: null,
   product: null,
-  dashboard: {
-
-  },
+  dashboard: {},
   comments: [],
   auctions: [],
   form: {
@@ -151,9 +155,10 @@ const initialState: CommentsState = {
 };
 
 
-const product = createReducer<CommentsState, any>(initialState, {
-  [INITIALIZE_FORM]: (state) => ({
+const main = createReducer<CommentsState, any>(initialState, {
+  [INITIALIZE_PRODUCTS]: (state) => ({
     ...state,
+    products: null,
   }),
   [REFRESH_AUCTION]: (state, { payload: { id, price } }) => {
     const idx = state.products?.findIndex((product: any) => product.id === id);
@@ -171,32 +176,47 @@ const product = createReducer<CommentsState, any>(initialState, {
     ...state,
     categories,
   }),
-  [LOAD_PRODUCTS_SUCCESS]: (state, { payload: products }) => ({
-    ...state,
-    products,
-  }),
+  [LOAD_PRODUCTS_SUCCESS]: (state, { payload }) => {
+    
+    console.log(payload);
+    
+    return {
+      ...state,
+      products: state.products
+        ? state.products.concat(payload.content)
+        : payload.content,
+      pageable: {
+        ...payload.pageable,
+        total : Math.ceil(parseInt(payload.total) / parseInt(payload.pageable.size)),
+      },
+    }
+  },
   [LIKE]: (state, { payload: id }) => {
-    const idx = state.products ? state.products.findIndex(product=>product.id === id) : -1;
+    const idx = state.products
+      ? state.products.findIndex((product) => product.id === id)
+      : -1;
     return produce(state, (draft) => {
-      if(draft.products){
+      if (draft.products) {
         draft.products[idx].numOfLike += 1;
         draft.products[idx].isLike = true;
       }
-    })
+    });
   },
-  [UN_LIKE]: (state, { payload: id }) =>{
-    const idx = state.products ? state.products.findIndex(product=>product.id === id) : -1;
+  [UN_LIKE]: (state, { payload: id }) => {
+    const idx = state.products
+      ? state.products.findIndex((product) => product.id === id)
+      : -1;
     return produce(state, (draft) => {
-      if(draft.products){
+      if (draft.products) {
         draft.products[idx].numOfLike -= 1;
         draft.products[idx].isLike = false;
       }
-    })
+    });
   },
   // 응답에 대한 비교코드 필요
   [LIKE_SUCCESS]: (state, { payload: numOfLike }) => state,
   [UN_LIKE_SUCCESS]: (state, { payload: numOfLike }) => state,
 });
 
-export default product;
+export default main;
 

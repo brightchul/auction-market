@@ -1,11 +1,23 @@
 import axios from "axios";
 import { AnchorHTMLAttributes } from "react";
 
-export const loadProducts = (id: number) => {
-  if (id) {
-    return axios.get(`/api/products/categories/${id}`);
+export const loadProducts = ({type, page} : {type?: string, page?: number}) => {
+
+  var query = [];
+  if(page){
+    query.push(["page",page]);
   }
-  return axios.get(`/api/products`);
+
+  // type validation
+  if(type){
+    query.push(["type", type]);
+  }
+
+  
+  var url = `/api/products?` + query.map(d=>d[0]+"="+d[1]).join('&')
+  console.log(url)
+
+  return axios.get(url);
 }
 
 export const getProduct = (id: number) => axios.get(`/api/products/${id}`);

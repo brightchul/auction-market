@@ -24,7 +24,7 @@ const ProductsRegisterContainer: React.FC<Props> = ({ history, match }) => {
   const { id } : { id? : number} = match.params;
   const { mode } : { mode? : string} = match.params;
 
-
+  
   const dispatch = useDispatch();
   const {
     categories,
@@ -42,7 +42,7 @@ const ProductsRegisterContainer: React.FC<Props> = ({ history, match }) => {
 
   useEffect(()=>{
     dispatch(loadCategories.request());
-    console.log(id, mode);
+    
     if(mode === 'edit'){
       dispatch(loadProduct.request(id));
     }

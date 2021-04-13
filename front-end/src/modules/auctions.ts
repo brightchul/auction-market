@@ -14,4 +14,3 @@ import createAsyncSaga, {
 } from '../lib/createAsyncSaga';
 import * as followingAPI from '../lib/api/products';
 import { AxiosError } from 'axios';
-

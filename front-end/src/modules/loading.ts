@@ -19,7 +19,13 @@ export const finishLoading = createAction(
   (requestType: any) => requestType
 )();
 
-const initialState = {};
+
+interface LoadingState {
+  [key:string] : any;
+}
+const initialState : LoadingState = {
+  
+};
 
 
 const loading = createReducer(initialState, {

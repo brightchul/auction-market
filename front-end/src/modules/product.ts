@@ -289,7 +289,7 @@ function* listenAuction() {
 }
 
 
-function* listenFinish() { 
+function* listenState() { 
   let socket;
   let socketChannel;
   
@@ -297,7 +297,7 @@ function* listenFinish() {
     // 소캣 생성
     socket        = yield call(createDataSocket);
     // 채널 생성
-    socketChannel = yield call(createSocketChannel, '/topic/finish', socket);
+    socketChannel = yield call(createSocketChannel, '/topic/state', socket);
     
     // yield fork(writeSocket, socket); 
 
@@ -332,7 +332,7 @@ function* listenFinish() {
 
 export function* productSaga() {
   yield fork(listenAuction);
-  yield fork(listenFinish);
+  yield fork(listenState);
   
 
 

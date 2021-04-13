@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { Dimmer, Header, List, Loader } from "semantic-ui-react";
+import { Checkbox, Dimmer, Header, List, Loader } from "semantic-ui-react";
 
 interface Props{
   categories: any;
@@ -17,12 +17,12 @@ const CategoriesList: React.FC<Props> = ({ categories }) => {
         <List.Icon name={hasChildren ? "folder" : "file"} />
         <List.Content>
           <List.Header>
-            <Link to={`/category/${category.id}`}>{category.title}</Link>
+            <Link to={`/main/${category.id}`}>{category.title}</Link>
           </List.Header>
           {/* <List.Description>Source files for project</List.Description> */}
           {hasChildren > 0 ? (
             <List.List>
-              {category.children.map((child: any) => get(child))}
+               {category.children.map((child: any) => get(child))}
             </List.List>
           ) : null}
         </List.Content>

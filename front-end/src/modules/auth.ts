@@ -16,6 +16,11 @@ import * as authAPI from '../lib/api/auth';
 import { AxiosError } from 'axios';
 
 
+const SET_LOGGED_INFO = "auth/SET_LOGGED_INFO";
+export const setLoggedInfo = createAction(SET_LOGGED_INFO, (loggedInfo)=>(loggedInfo))();
+
+const LOGOUT = "auth/LOGOUT";
+export const logout = createAction(LOGOUT)();
 
 
 const [
@@ -44,20 +49,29 @@ export function* authSaga() {
 
 
 interface AuthState {
-  result: any;
+  loggedInfo: any;
 }
 
 const initialState: AuthState = {
-  result: null
+  loggedInfo: null
 };
 
 
 const auth = createReducer<AuthState, any>(initialState, {
+  [SET_LOGGED_INFO]: (state, { payload: loggedInfo }) => ({
+    ...state,
+    loggedInfo
+  }),
   [LOGIN_KAKAO_SUCCESS]: (state, payload) => {
     return {
-      result : payload.meta.data
+      loggedInfo : payload.meta.data.response
     }
-  }
+  },
+  [LOGOUT] : (state) => ({
+    ...state,
+    loggedInfo: null
+  })
+  
 });
 
 

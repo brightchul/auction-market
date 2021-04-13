@@ -1,6 +1,7 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, RouteComponentProps, Switch, withRouter } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
+import axios from 'axios';
 
 import styled from "@emotion/styled";
 
@@ -10,22 +11,68 @@ import MainPage from "./pages/MainPage";
 import ProductsRegisterPage from "./pages/ProductsRegisterPage";
 import ProductsViewPage from "./pages/ProductsViewPage";
 import ProfilePage from "./pages/ProfilePage";
-
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import storage from './lib/storage';
+import { setLoggedInfo } from "./modules/auth";
+  
 const AppWrapper = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
 `;
 
-const App: React.FC = () => {
+
+interface Props extends RouteComponentProps {
+
+}
+
+const App: React.FC<Props> = ({ match, history }) => {
+
+  const dispatch = useDispatch();
+  const {
+    loggedInfo
+  } = useSelector(({ auth }: { auth: any; }) => ({
+    loggedInfo: auth.loggedInfo,
+  }), shallowEqual);
+
+
+
+
+  // 로그인 체크
+  useEffect(()=>{    
+    const loggedInfoInStorage = storage.get('loggedInfo');
+    if(match.url !== '/login' && !loggedInfo && !loggedInfoInStorage){
+      history.push('/login');
+    }
+  
+    if(!loggedInfo){
+      dispatch(setLoggedInfo(loggedInfoInStorage));
+    }
+
+    // const { UserActions } = this.props;
+    // UserActions.setLoggedInfo(loggedInfo);
+    // try {
+    //     await UserActions.checkStatus();
+    // } catch (e) {
+    //     storage.remove('loggedInfo');
+    //     window.location.href = '/auth/login?expired';
+    // }
+  
+  },[]);
+
+
+
+
+
+
   return (
     <AppWrapper>
       <Switch>
         <Route exact path="/intro" component={IndexPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route path="/login/:vendor" component={LoginPage} />
-        <Route exact path="/" component={MainPage} />
-        <Route exact path="/category/:id" component={MainPage} />
+        <Route exact path="/main" component={MainPage} />
+        <Route exact path="/main/:category" component={MainPage} />
         <Route
           exact
           path="/products/register"
@@ -39,4 +86,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default withRouter(App);

@@ -2,16 +2,16 @@
 개인적으로 진행한 사이드 프로젝트입니다. 백엔드와 프론트엔드를 모두 포함하지만 배포목적의 서비스가 아니다 보니 제가 백엔드 개발자인 만큼 UI보다는 기능적관점 위주의 개발을 진행하였습니다. 백엔드의 테스트코드, API 문서화에 중점을 두고 개발을 진행하였습니다. 
 
 다음은 프로젝트 진행에 대한 글입니다.
-1. [프로젝트선정](https://youngwonseo.github.io/경매-서비스-파트-1-프로젝트-선정하기)
-2. [기능정의](https://youngwonseo.github.io/경매-서비스-파트-2-기능정의)
-3. [시스템 아키텍처와 프로젝트 세팅](https://youngwonseo.github.io/경매-서비스-파트-3-시스템-아키텍처와-프로젝트-세팅)
-4. [데이터베이스 설계](https://youngwonseo.github.io/경매-서비스-파트-4-데이터베이스-설계)
-5. [소셜 로그인 구현 (JWT)](https://youngwonseo.github.io/경매-서비스-파트-5-소셜-로그인-구현-jwt)
-6. [경매 서비스 파트6 - 상품목록 (Querydsl, N+1)](https://youngwonseo.github.io/경매-서비스-파트-6-상품목록-querydsl-n-1)
-7. [실시간 경매 (Websocket, STOMP, RabbitMQ)](https://youngwonseo.github.io/경매-서비스-파트-7-실시간-경매-websocket-stomp-rabbit-mq)
-8. [테스팅과 문서화 (JUnit5, Spring Docs Rest)](https://youngwonseo.github.io/경매-서비스-파트-8-테스팅과-문서화-j-unit-5-spring-docs-rest)
-9. [결과 UI](https://youngwonseo.github.io/경매-서비스-파트-9-결과-ui)
-10. [마무리](https://youngwonseo.github.io/경매-서비스-파트-10-마무리)
+1. [프로젝트선정](https://youngwonseo.github.io/auction/part1)
+2. [기능정의](https://youngwonseo.github.io/auction/part2)
+3. [시스템 아키텍처와 프로젝트 세팅](https://youngwonseo.github.io/auction/part3)
+4. [데이터베이스 설계](https://youngwonseo.github.io/auction/part4)
+5. [소셜 로그인 구현 (JWT)](https://youngwonseo.github.io/auction/part5)
+6. [경매 서비스 파트6 - 상품목록 (Querydsl, N+1)](https://youngwonseo.github.io/auction/part6)
+7. [실시간 경매 (Websocket, STOMP, RabbitMQ)](https://youngwonseo.github.io/auction/part7)
+8. [테스팅과 문서화 (JUnit5, Spring Docs Rest)](https://youngwonseo.github.io/auction/part8)
+9. [결과 UI](https://youngwonseo.github.io/auction/part9)
+10. [마무리](https://youngwonseo.github.io/auction/part10)
 
 ## 기술스택
 

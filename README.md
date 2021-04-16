@@ -7,7 +7,7 @@
 3. [시스템 아키텍처와 프로젝트 세팅](https://youngwonseo.github.io/auction/part3)
 4. [데이터베이스 설계](https://youngwonseo.github.io/auction/part4)
 5. [소셜 로그인 구현 (JWT)](https://youngwonseo.github.io/auction/part5)
-6. [경매 서비스 파트6 - 상품목록 (Querydsl, N+1)](https://youngwonseo.github.io/auction/part6)
+6. [상품목록 (Querydsl, N+1)](https://youngwonseo.github.io/auction/part6)
 7. [실시간 경매 (Websocket, STOMP, RabbitMQ)](https://youngwonseo.github.io/auction/part7)
 8. [테스팅과 문서화 (JUnit5, Spring Docs Rest)](https://youngwonseo.github.io/auction/part8)
 9. [결과 UI](https://youngwonseo.github.io/auction/part9)

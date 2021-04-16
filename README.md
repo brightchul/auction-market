@@ -10,8 +10,8 @@
 6. [경매 서비스 파트6 - 상품목록 (Querydsl, N+1)](https://youngwonseo.github.io/경매-서비스-파트-6-상품목록-querydsl-n-1)
 7. [실시간 경매 (Websocket, STOMP, RabbitMQ)](https://youngwonseo.github.io/경매-서비스-파트-7-실시간-경매-websocket-stomp-rabbit-mq)
 8. [테스팅과 문서화 (JUnit5, Spring Docs Rest)](https://youngwonseo.github.io/경매-서비스-파트-8-테스팅과-문서화-j-unit-5-spring-docs-rest)
-9. [결과 UI](https://youngwonseo.github.io/%EA%B2%BD%EB%A7%A4-%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%8C%8C%ED%8A%B8-9-%EA%B2%B0%EA%B3%BC-ui)
-10. [마무리](https://youngwonseo.github.io/%EA%B2%BD%EB%A7%A4-%EC%84%9C%EB%B9%84%EC%8A%A4-%ED%8C%8C%ED%8A%B8-10-%EB%A7%88%EB%AC%B4%EB%A6%AC)
+9. [결과 UI](https://youngwonseo.github.io/경매-서비스-파트-9-결과-ui)
+10. [마무리](https://youngwonseo.github.io/경매-서비스-파트-10-마무리)
 
 ## 기술스택
 

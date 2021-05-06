@@ -4,16 +4,18 @@
 
 다음은 프로젝트 진행에 대한 글입니다.
 
-1. [프로젝트선정](https://youngwonseo.github.io/auction/part1)
-2. [기능정의](https://youngwonseo.github.io/auction/part2)
-3. [시스템 아키텍처와 프로젝트 세팅](https://youngwonseo.github.io/auction/part3)
-4. [데이터베이스 설계](https://youngwonseo.github.io/auction/part4)
-5. [소셜 로그인 구현 (JWT)](https://youngwonseo.github.io/auction/part5)
-6. [상품목록 (Querydsl, N+1)](https://youngwonseo.github.io/auction/part6)
-7. [실시간 경매 (Websocket, STOMP, RabbitMQ)](https://youngwonseo.github.io/auction/part7)
-8. [테스팅과 문서화 (JUnit5, Spring Docs Rest)](https://youngwonseo.github.io/auction/part8)
-9. [결과 UI](https://youngwonseo.github.io/auction/part9)
-10. [마무리](https://youngwonseo.github.io/auction/part10)
+1. [기능정의](https://youngwonseo.tistory.com/6)
+2. [시스템 아키텍처와 프로젝트 세팅](https://youngwonseo.tistory.com/7)
+3. [데이터베이스 설계](https://youngwonseo.tistory.com/8)
+4. [소셜 로그인 구현 (JWT)](https://youngwonseo.tistory.com/9)
+5. [상품목록 (Querydsl, N+1)](https://youngwonseo.tistory.com/10)
+6. [경매기능(Websocket, Redis, RabbitMQ)](https://youngwonseo.tistory.com/11)
+7. [테스팅과 문서화 (JUnit5, Spring Docs Rest)](https://youngwonseo.tistory.com/12)
+8. [프론트엔드 상태관리](https://youngwonseo.tistory.com/13)
+9. [결과 UI](https://youngwonseo.tistory.com/14)
+10. [무중단 배포와 로드 벨런싱](https://youngwonseo.tistory.com/15)
+11. [CI/CD](https://youngwonseo.tistory.com/16)
+12. [마무리](https://youngwonseo.tistory.com/17)
 
 ## 기술스택
 
@@ -96,9 +98,8 @@
 
 ![](./docs/screenshot-main.png)
 
-
 ## References
 
 * [스프링 부트와 AWS로 혼자 구현하는 웹 서비스 - 이동욱지음](http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9788965402602&orderClick=LEa&Kc=)
-
 * [https://github.com/cheese10yun/spring-jpa-best-practices](https://github.com/cheese10yun/spring-jpa-best-practices)
+* [Class101 백엔드 실무 - 개발자 푸](https://class101.net/products/T6HT0bUDKIH1V5i3Ji2M)

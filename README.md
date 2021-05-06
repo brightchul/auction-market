@@ -21,8 +21,8 @@
   * Java8
   * Spring boot
   * Spring Data JPA
+  * Spring Data Redis
   * Spring Validation
-  * Spring AMQP
   * Spring Websocket
   * Spring Security
   * Spring Rest Docs
@@ -82,6 +82,10 @@
 
 ![](./docs/database.png)
 
+## 경매처리
+
+![](./docs/traffic-handling.png)
+
 ## UI
 
 ### 로그인
@@ -91,12 +95,6 @@
 ### 상품목록
 
 ![](./docs/screenshot-main.png)
-
-### 상품상세화면
-
-
-
-
 
 
 ## References
